@@ -5,26 +5,34 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.viewpager.widget.ViewPager
 import tomuch.coffee.tokoonline.R
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+import tomuch.coffee.tokoonline.adapter.AdapterSlider
 
 
-/**
- * A simple [Fragment] subclass.
- * Use the [HomeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class HomeFragment : Fragment() {
+
+    lateinit var vpSlider: ViewPager
 
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home, container, false)
+        val view: View = inflater.inflate(R.layout.fragment_home, container, false)
+
+        vpSlider = view.findViewById(R.id.vp_slider)
+
+        val arrSlider = ArrayList<Int>()
+        arrSlider.add(R.drawable.slider1)
+        arrSlider.add(R.drawable.slider2)
+        arrSlider.add(R.drawable.slider3)
+
+
+        val adapterSlider = AdapterSlider(arrSlider, activity)
+        vpSlider.adapter = adapterSlider
+
+        return view
     }
 
 

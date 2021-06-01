@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         menuItem = menu.getItem(0)
         menuItem.isChecked = true
 
-        bottomNavigationView.setOnNavigationItemReselectedListener { item ->
+        bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when(item.itemId){
                 R.id.navigation_home -> {
                     callFragment(0,fragmentHome)
