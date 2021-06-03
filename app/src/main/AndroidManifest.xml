@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="tomuch.coffee.tokoonline">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -22,7 +24,10 @@
             </intent-filter>
         </activity>
 
+
         <activity android:name=".activity.LoginActivity"></activity>
+        <activity android:name=".activity.MasukActivity" />
+        <activity android:name=".activity.RegisterActivity" />
 
     </application>
 

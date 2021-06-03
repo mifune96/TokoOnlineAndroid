@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.fragment_home.*
 import tomuch.coffee.tokoonline.activity.LoginActivity
+import tomuch.coffee.tokoonline.activity.MasukActivity
 import tomuch.coffee.tokoonline.fragment.AkunFragment
 import tomuch.coffee.tokoonline.fragment.HomeFragment
 import tomuch.coffee.tokoonline.fragment.KeranjangFragment
@@ -65,7 +66,7 @@ class MainActivity : AppCompatActivity() {
                     if (s.getStatusLofgin()){
                         callFragment(2,fragmentAkun)
                     } else{
-                        startActivity(Intent(this, LoginActivity::class.java ))
+                        startActivity(Intent(this, MasukActivity::class.java ))
                     }
 
                 }
