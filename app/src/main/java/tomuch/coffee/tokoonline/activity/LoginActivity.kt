@@ -6,6 +6,9 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.activity_login.edt_email
+import kotlinx.android.synthetic.main.activity_login.edt_password
+import kotlinx.android.synthetic.main.activity_register.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -49,6 +52,9 @@ class LoginActivity : AppCompatActivity() {
                 if (respon.succes == 1){
                     //Respon berhasil
                     s.setStatusLogin(true)
+                    s.setSting(s.nama, respon.user.name)
+                    s.setSting(s.phone, respon.user.phone)
+                    s.setSting(s.email, respon.user.email)
                     val intent = Intent(this@LoginActivity, MainActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
                     startActivity(intent)
