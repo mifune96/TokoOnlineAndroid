@@ -1,25 +1,47 @@
 package tomuch.coffee.tokoonline.activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_register.*
 import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import tomuch.coffee.tokoonline.MainActivity
 import tomuch.coffee.tokoonline.R
 import tomuch.coffee.tokoonline.app.ApiConfig
+import tomuch.coffee.tokoonline.helper.SharedPref
+import tomuch.coffee.tokoonline.model.ResponModel
 
 class RegisterActivity : AppCompatActivity() {
+
+    lateinit var s: SharedPref
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
+        s = SharedPref(this)
+
         btn_register.setOnClickListener {
             register()
         }
+
+        btn_google.setOnClickListener {
+            dataDummy()
+        }
     }
 
+    fun dataDummy(){
+
+        edt_nama.setText("Ali")
+        edt_email.setText("ali@gmail.com")
+        edt_nomortlp.setText("08127771")
+        edt_password.setText("12345678")
+    }
     fun register(){
         if (edt_nama.text.isEmpty()){
             edt_nama.error = "Kolom Nama tidak boleh kosong"
@@ -42,13 +64,29 @@ class RegisterActivity : AppCompatActivity() {
             return
         }
 
-        ApiConfig.instanceRetrofit.register(edt_nama.text.toString(),edt_email.text.toString(),edt_password.text.toString()).enqueue(object :Callback<ResponseBody>{
-            override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-               // handel ketika gagal
+        pb_register.visibility = View.VISIBLE
+
+        ApiConfig.instanceRetrofit.register(edt_nama.text.toString(),edt_email.text.toString(),edt_password.text.toString()).enqueue(object :Callback<ResponModel>{
+            override fun onResponse(call: Call<ResponModel>, response: Response<ResponModel>) {
+                pb_register.visibility = View.GONE
+                val respon = response.body()!!
+                if (respon.succes == 1){
+                    //Respon berhasil
+                    s.setStatusLogin(true)
+                    val intent = Intent(this@RegisterActivity, MainActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
+                    startActivity(intent)
+                    finish()
+                    Toast.makeText(this@RegisterActivity,"Selamat Datang " +respon.user.name, Toast.LENGTH_SHORT).show()
+                } else{
+                    //Respon Gagal
+                    Toast.makeText(this@RegisterActivity,"Error: " +respon.message, Toast.LENGTH_SHORT).show()
+                }
             }
 
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-               // handel ketika sukses
+            override fun onFailure(call: Call<ResponModel>, t: Throwable) {
+                pb_register.visibility = View.GONE
+                Toast.makeText(this@RegisterActivity,"Error: "+t.message, Toast.LENGTH_SHORT).show()
             }
 
         })

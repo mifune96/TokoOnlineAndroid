@@ -6,54 +6,156 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.BaruActivity">
-    
+
     <LinearLayout
+        android:layout_marginHorizontal="15dp"
+        android:paddingHorizontal="15dp"
         android:orientation="vertical"
-        android:gravity="center"
         android:layout_centerInParent="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        >
 
-        <TextView
-            android:textColor="@color/colorPrimary"
-            android:textSize="18dp"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Selamat Datang"
-            />
+            >
 
-        <TextView
-            android:textColor="@color/colorPrimary"
-            android:textSize="28dp"
-            android:textStyle="bold"
-            android:layout_width="wrap_content"
+            <TextView
+                android:textStyle="bold"
+                android:textSize="25dp"
+                android:textColor="@color/biru"
+                android:layout_marginTop="20dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Selamat Datang"
+                />
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                >
+
+                <ImageView
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_email_24"
+                    />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <EditText
+                        android:id="@+id/edt_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:background="@null"
+                        android:inputType="text"
+                        android:hint="Email"
+                        android:singleLine="true"
+                        android:maxLines="1"
+                        >
+
+
+                    </EditText>
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#CACACA"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Toko Online"
-            />
+            >
 
-        <ImageView
-            android:layout_marginTop="15dp"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:src="@drawable/logoicon"
-            />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                >
+
+                <ImageView
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_lock_24"
+                    />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    app:passwordToggleEnabled="true"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
+
+                    <EditText
+                        android:id="@+id/edt_password"
+                        android:layout_width="match_parent"
+                        android:layout_height="40dp"
+                        android:background="@null"
+                        android:inputType="textPassword"
+                        android:hint="Password"
+                        android:singleLine="true"
+                        android:maxLines="1"
+                        />
+
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#CACACA"
+                />
+
+        </LinearLayout>
 
         <Button
-            android:id="@+id/btn_prosesLogin"
+            android:id="@+id/btn_login"
             android:background="@drawable/bg_btn_login1"
             android:textColor="@color/white"
-            android:layout_marginTop="25dp"
-            android:layout_width="170dp"
-            android:layout_height="35dp"
-            android:text="Masuk"/>
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:text="Login"/>
 
-        <Button
-            android:textColor="#0099FF"
-            android:background="@drawable/bg_btn_login2"
-            android:layout_marginTop="10dp"
-            android:layout_width="170dp"
-            android:layout_height="35dp"
-            android:text="Daftar"/>
+
+        <TextView
+            android:id="@+id/btn_lupapassword"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:layout_marginHorizontal="0dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lupa Password"
+            />
+
     </LinearLayout>
+
+    <ProgressBar
+        android:visibility="gone"
+        android:id="@+id/pb_login"
+        android:layout_centerInParent="true"
+        android:layout_width="40dp"
+        android:layout_height="40dp"/>
 
 </RelativeLayout>
