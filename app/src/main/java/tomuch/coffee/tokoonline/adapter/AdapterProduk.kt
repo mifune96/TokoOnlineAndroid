@@ -10,6 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import tomuch.coffee.tokoonline.R
 import tomuch.coffee.tokoonline.model.Produk
+import java.text.NumberFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class AdapterProduk(var data:ArrayList<Produk>): RecyclerView.Adapter<AdapterProduk.Holder>() {
 
@@ -32,7 +35,7 @@ class AdapterProduk(var data:ArrayList<Produk>): RecyclerView.Adapter<AdapterPro
     override fun onBindViewHolder(holder: Holder, position: Int) {
         // tempat set value
         holder.tvNama.text = data[position].name
-        holder.tvHarga.text = "Rp." + data[position].harga
+        holder.tvHarga.text = NumberFormat.getCurrencyInstance(Locale("in", "ID")).format(Integer.valueOf(data[position].harga))
 //        holder.imgProduk.setImageResource(data[position].image)
         val image = "http://192.168.100.50/tokoonline/public/storage/produk/" +data[position].image
         Log.d("respons", image)
