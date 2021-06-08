@@ -38,8 +38,6 @@ class HomeFragment : Fragment() {
         val view: View = inflater.inflate(R.layout.fragment_home, container, false)
         init(view)
         getProduk()
-        displayProduk()
-
 
         return view
     }
@@ -63,21 +61,25 @@ class HomeFragment : Fragment() {
         val layoutManager3 = LinearLayoutManager(activity)
         layoutManager3.orientation = LinearLayoutManager.HORIZONTAL
 
-//        rvProduk.adapter = AdapterProduk(arrProduk)
-//        rvProduk.layoutManager = layoutManager
-//
-//        rvProdukTerlaris.adapter = AdapterProduk(arrProdukTerlaris)
-//        rvProdukTerlaris.layoutManager = layoutManager2
-//
-//        rvElektronik.adapter = AdapterProduk(arrElektronik)
-//        rvElektronik.layoutManager = layoutManager3
-    }
+        rvProduk.adapter = AdapterProduk(listProduk)
+        rvProduk.layoutManager = layoutManager
 
+        rvProdukTerlaris.adapter = AdapterProduk(listProduk)
+        rvProdukTerlaris.layoutManager = layoutManager2
+
+        rvElektronik.adapter = AdapterProduk(listProduk)
+        rvElektronik.layoutManager = layoutManager3
+    }
+    private var listProduk:ArrayList<Produk> = ArrayList()
     fun getProduk() {
-        ApiConfig.instanceRetrofit.login(edt_email.text.toString(),edt_password.text.toString()).enqueue(object :
+        ApiConfig.instanceRetrofit.getProduk().enqueue(object :
             Callback<ResponModel> {
             override fun onResponse(call: Call<ResponModel>, response: Response<ResponModel>) {
-
+              val res = response.body()!!
+              if (res.succes == 1){
+                  listProduk = res.produks
+                  displayProduk()
+              }
             }
 
             override fun onFailure(call: Call<ResponModel>, t: Throwable) {

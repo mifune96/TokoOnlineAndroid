@@ -1,11 +1,13 @@
 package tomuch.coffee.tokoonline.adapter
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import tomuch.coffee.tokoonline.R
 import tomuch.coffee.tokoonline.model.Produk
 
@@ -29,9 +31,17 @@ class AdapterProduk(var data:ArrayList<Produk>): RecyclerView.Adapter<AdapterPro
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
         // tempat set value
-        holder.tvNama.text = data[position].nama
-        holder.tvHarga.text = data[position].harga
-        holder.imgProduk.setImageResource(data[position].gambar)
+        holder.tvNama.text = data[position].name
+        holder.tvHarga.text = "Rp." + data[position].harga
+//        holder.imgProduk.setImageResource(data[position].image)
+        val image = "http://192.168.100.50/tokoonline/public/storage/produk/" +data[position].image
+        Log.d("respons", image)
+        Picasso.get()
+            .load(image)
+            .placeholder(R.drawable.product)
+            .error(R.drawable.product)
+            .into(holder.imgProduk)
+
 
     }
 
