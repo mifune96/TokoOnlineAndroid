@@ -49,7 +49,7 @@ class AdapterProduk(var activity: Activity, var data:ArrayList<Produk>): Recycle
 //        holder.imgProduk.setImageResource(data[position].image)
 //        val image = "http://192.168.100.50/tokoonline/public/storage/produk/" +data[position].image
 
-        val image = "http://192.168.1.4/tokoonline/public/storage/produk/" +data[position].image
+        val image = "https://6e5b8e882b4e.ngrok.io/storage/produk/" +data[position].image
         Picasso.get()
             .load(image)
             .placeholder(R.drawable.product)

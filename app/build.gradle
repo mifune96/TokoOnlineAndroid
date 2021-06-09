@@ -1,6 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 30
@@ -62,6 +63,13 @@ dependencies {
 
     //display image
     implementation 'com.squareup.picasso:picasso:2.71828'
+
+    //SQLite
+    kapt "android.arch.persistence.room:compiler:1.1.1"
+    implementation 'android.arch.persistence.room:runtime:1.1.1'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+    implementation "androidx.room:room-runtime:2.3.0"
+    annotationProcessor "androidx.room:room-compiler:2.3.0"
 
 
 }
