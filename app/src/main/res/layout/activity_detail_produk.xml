@@ -190,7 +190,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="10dp"
-                        android:text="imtisto@gmail.com"
+                        android:text="AliGantengbingits@gmail.com"
                         android:textColor="@color/biru"
                         android:textSize="13dp"/>
 
