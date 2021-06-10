@@ -8,51 +8,30 @@
 
     <RelativeLayout
         android:background="@color/colorPrimary"
-        android:padding="8dp"
+        android:padding="10dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <androidx.cardview.widget.CardView
-            android:layout_marginRight="8dp"
-            android:layout_toLeftOf="@id/icn_chat"
-            app:cardCornerRadius="17dp"
-            android:layout_width="match_parent"
-            android:layout_height="35dp">
-
-            <LinearLayout
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <ImageView
-                    android:layout_marginLeft="8dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_search_orange_24dp"/>
-
-                <TextView
-                    android:layout_marginLeft="5dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Cari Produk Disini !!!"/>
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
+        <TextView
+            android:textStyle="bold"
+            android:layout_centerInParent="true"
+            android:textColor="@color/white"
+            android:textSize="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Keranjang"/>
 
         <ImageView
-            android:id="@+id/icn_chat"
+            android:id="@+id/btn_delet"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_marginLeft="10dp"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@drawable/ic_chat_putih_24dp"/>
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:src="@drawable/ic_baseline_delete_24"/>
 
     </RelativeLayout>
-
-
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -85,6 +64,7 @@
                     android:text="Total Bayar"/>
 
                 <TextView
+                    android:id="@+id/tv_totalbayar"
                     android:textColor="@color/colorPrimary"
                     android:textSize="16dp"
                     android:layout_width="wrap_content"
@@ -93,24 +73,20 @@
 
             </LinearLayout>
 
-            <RelativeLayout
+            <TextView
+                android:id="@+id/btn_bayar"
+                android:gravity="center"
                 android:layout_alignParentRight="true"
                 android:layout_width="120dp"
-                android:layout_height="40dp"
-                android:layout_marginLeft="15dp"
-                android:background="@drawable/bg_btn_beli">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:text="Bayar"
-                    android:textColor="@color/white"
-                    android:textSize="15dp"
-                    android:textStyle="bold"
-                    />
-
-            </RelativeLayout>
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Bayar"
+                android:textColor="@color/white"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:padding="10dp"
+                android:background="@drawable/bg_btn_beli"
+                />
 
         </RelativeLayout>
 
