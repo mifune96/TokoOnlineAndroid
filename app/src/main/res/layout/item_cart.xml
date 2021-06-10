@@ -81,7 +81,39 @@
                 <RelativeLayout
                     android:layout_width="130dp"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/bg_penambahan">
+                    android:background="@drawable/bg_penambahan"
+                    android:padding="5dp">
+
+                    <ImageView
+                        android:id="@+id/btn_kurang"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5dp"
+                        android:src="@drawable/ic_baseline_remove_24"/>
+
+                    <TextView
+                        android:id="@+id/tv_jumlah"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="5dp"
+                        android:ellipsize="marquee"
+                        android:text="20"
+                        android:textColor="@color/colorPrimary"
+                        android:textStyle="bold"/>
+
+                    <ImageView
+                        android:id="@+id/btn_tambah"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="5dp"
+                        android:src="@drawable/ic_baseline_add_24"/>
+
 
                 </RelativeLayout>
 

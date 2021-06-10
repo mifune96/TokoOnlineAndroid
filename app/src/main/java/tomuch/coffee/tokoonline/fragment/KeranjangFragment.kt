@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import tomuch.coffee.tokoonline.R
+import tomuch.coffee.tokoonline.adapter.AdapterCart
 import tomuch.coffee.tokoonline.adapter.AdapterProduk
 import tomuch.coffee.tokoonline.room.MyDatabase
 
@@ -43,7 +44,7 @@ class KeranjangFragment : Fragment() {
         val layoutManager = LinearLayoutManager(activity)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
 
-        rvProduk.adapter = AdapterProduk(requireActivity(),listProduk)
+        rvProduk.adapter = AdapterCart(requireActivity(),listProduk)
         rvProduk.layoutManager = layoutManager
     }
 
