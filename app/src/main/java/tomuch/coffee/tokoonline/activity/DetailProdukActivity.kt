@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import io.reactivex.Observable
@@ -60,7 +61,9 @@ class DetailProdukActivity : AppCompatActivity() {
             }
         }
         btn_keranjangcostom.setOnClickListener {
-//            startActivity(Intent(this,))
+            val intent = Intent("event:cart")
+            LocalBroadcastManager.getInstance(this).sendBroadcast(intent)
+            onBackPressed()
         }
     }
 
