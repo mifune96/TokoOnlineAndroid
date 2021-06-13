@@ -13,6 +13,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_detail_produk.*
+import kotlinx.android.synthetic.main.item_cart.view.*
 import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.toolbar.toolbar
 import kotlinx.android.synthetic.main.toolbar_custom.*
@@ -39,11 +40,14 @@ class DetailProdukActivity : AppCompatActivity() {
 
     private fun mainButton(){
         btn_keranjangdetailproduk.setOnClickListener {
-
-            if (){
-
+            val data = myDb.daoCart().getProduk(produk.id)
+            if (data != null){
+                insert()
+            } else {
+                data.jumlah = data.jumlah + 1
+                update(data)
             }
-            insert()
+
         }
 
         btn_favoritdetailproduk.setOnClickListener {
@@ -62,6 +66,17 @@ class DetailProdukActivity : AppCompatActivity() {
 
     private fun insert(){
         CompositeDisposable().add(Observable.fromCallable { myDb.daoCart().insert(produk) }
+            .subscribeOn(Schedulers.computation())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                checkCart()
+                Log.d("respons", "data inserted")
+                Toast.makeText(this, "Data Berhasil Ditambahkan ke Cart",Toast.LENGTH_SHORT).show()
+            })
+    }
+
+    private fun update(data: Produk){
+        CompositeDisposable().add(Observable.fromCallable { myDb.daoCart().update(data) }
             .subscribeOn(Schedulers.computation())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
