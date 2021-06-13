@@ -41,7 +41,7 @@ class DetailProdukActivity : AppCompatActivity() {
     private fun mainButton(){
         btn_keranjangdetailproduk.setOnClickListener {
             val data = myDb.daoCart().getProduk(produk.id)
-            if (data != null){
+            if (data == null){
                 insert()
             } else {
                 data.jumlah = data.jumlah + 1
