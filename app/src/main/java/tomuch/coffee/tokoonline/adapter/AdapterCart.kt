@@ -37,6 +37,7 @@ class AdapterCart(var activity: Activity, var data:ArrayList<Produk>): RecyclerV
         val btnDelet = view.findViewById<ImageView>(R.id.btn_delet)
 
         val checkbox = view.findViewById<CheckBox>(R.id.cb_produk)
+        val tvJumlah = view.findViewById<TextView>(R.id.tv_jumlah)
 
 
     }
@@ -54,6 +55,9 @@ class AdapterCart(var activity: Activity, var data:ArrayList<Produk>): RecyclerV
         // tempat set value
         holder.tvNama.text = data[position].name
         holder.tvHarga.text = Helper().changeRupiah(data[position].harga)
+
+        var jumlah = data[position].jumlah
+        holder.tvJumlah.text = jumlah.toString()
 //        holder.imgProduk.setImageResource(data[position].image)
 //        val image = "http://192.168.100.50/tokoonline/public/storage/produk/" +data[position].image
 
