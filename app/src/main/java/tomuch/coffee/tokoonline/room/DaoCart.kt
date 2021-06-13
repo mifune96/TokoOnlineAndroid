@@ -19,7 +19,7 @@ interface DaoCart {
     fun getAll(): List<Produk>
 
     @Query("SELECT * FROM cart WHERE id = :id LIMIT 1")
-    fun getNote(id: Int): Produk
+    fun getProduk(id: Int): Produk
 
     @Query("DELETE FROM cart")
     fun deleteAll(): Int

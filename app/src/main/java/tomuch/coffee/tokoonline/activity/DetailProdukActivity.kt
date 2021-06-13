@@ -1,9 +1,11 @@
 package tomuch.coffee.tokoonline.activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import io.reactivex.Observable
@@ -37,6 +39,10 @@ class DetailProdukActivity : AppCompatActivity() {
 
     private fun mainButton(){
         btn_keranjangdetailproduk.setOnClickListener {
+
+            if (){
+
+            }
             insert()
         }
 
@@ -49,6 +55,9 @@ class DetailProdukActivity : AppCompatActivity() {
                 println(note.harga)
             }
         }
+        btn_keranjangcostom.setOnClickListener {
+//            startActivity(Intent(this,))
+        }
     }
 
     private fun insert(){
@@ -58,6 +67,7 @@ class DetailProdukActivity : AppCompatActivity() {
             .subscribe {
                 checkCart()
                 Log.d("respons", "data inserted")
+                Toast.makeText(this, "Data Berhasil Ditambahkan ke Cart",Toast.LENGTH_SHORT).show()
             })
     }
 
@@ -83,7 +93,7 @@ class DetailProdukActivity : AppCompatActivity() {
 
 //        val img = "http://192.168.1.4/tokoonline/public/storage/produk/" +produk.image
 //        val img = "https://06794948d1a0.ngrok.io/tokoonline/public/storage/produk/" +produk.image
-        val img = "https://d4e65b27bee5.ngrok.io/storage/produk/" +produk.image
+        val img = "https://414260128518.ngrok.io/storage/produk/" +produk.image
         Picasso.get()
             .load(img)
             .placeholder(R.drawable.product)

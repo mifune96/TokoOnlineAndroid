@@ -5,8 +5,6 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -22,6 +20,7 @@
             />
 
         <RelativeLayout
+            android:id="@+id/btn_keranjangcostom"
             android:layout_marginRight="15dp"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
