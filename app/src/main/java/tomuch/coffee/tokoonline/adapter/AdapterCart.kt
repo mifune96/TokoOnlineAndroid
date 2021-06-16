@@ -1,29 +1,22 @@
 package tomuch.coffee.tokoonline.adapter
 
 import android.app.Activity
-import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
-import com.google.gson.Gson
 import com.squareup.picasso.Picasso
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
-import tomuch.coffee.tokoonline.MainActivity
 import tomuch.coffee.tokoonline.R
-import tomuch.coffee.tokoonline.activity.DetailProdukActivity
-import tomuch.coffee.tokoonline.activity.LoginActivity
 import tomuch.coffee.tokoonline.helper.Helper
 import tomuch.coffee.tokoonline.model.Produk
 import tomuch.coffee.tokoonline.room.MyDatabase
 import tomuch.coffee.tokoonline.util.Config
-import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -61,7 +54,7 @@ class AdapterCart(var activity: Activity, var data:ArrayList<Produk>, var listen
 
         // tempat set value
         holder.tvNama.text = produk.name
-        holder.tvHarga.text = Helper().changeRupiah(produk.harga)
+        holder.tvHarga.text = Helper().changeRupiah(harga * produk.jumlah)
 
         var jumlah = data[position].jumlah
         holder.tvJumlah.text = jumlah.toString()
@@ -91,19 +84,18 @@ class AdapterCart(var activity: Activity, var data:ArrayList<Produk>, var listen
             update(produk)
             holder.tvJumlah.text = jumlah.toString()
             holder.tvHarga.text = Helper().changeRupiah(harga * jumlah)
-
-
         }
 
         holder.btnDelet.setOnClickListener {
             delet(produk)
+            listener.onDelet(position)
         }
 
     }
 
     interface Listeners{
         fun onUpdate()
-        fun onDelet()
+        fun onDelet(position: Int)
     }
 
     private fun update(data: Produk){
@@ -122,7 +114,7 @@ class AdapterCart(var activity: Activity, var data:ArrayList<Produk>, var listen
             .subscribeOn(Schedulers.computation())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
-                listener.onDelet()
+
             })
     }
 

@@ -5,14 +5,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import tomuch.coffee.tokoonline.R
 import tomuch.coffee.tokoonline.adapter.AdapterCart
-import tomuch.coffee.tokoonline.adapter.AdapterProduk
 import tomuch.coffee.tokoonline.helper.Helper
 import tomuch.coffee.tokoonline.room.MyDatabase
 
@@ -43,16 +41,21 @@ class KeranjangFragment : Fragment() {
         val listProduk = myDb.daoCart().getAll() as ArrayList
         val layoutManager = LinearLayoutManager(activity)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
+        lateinit var adapter : AdapterCart
 
-        rvProduk.adapter = AdapterCart(requireActivity(),listProduk, object  : AdapterCart.Listeners{
+        adapter = AdapterCart(requireActivity(),listProduk, object  : AdapterCart.Listeners{
             override fun onUpdate() {
                 hitungTotal()
             }
 
-            override fun onDelet() {
+            override fun onDelet(position: Int) {
+                listProduk.removeAt(position)
+                hitungTotal()
+                adapter.notifyDataSetChanged()
 
             }
         })
+        rvProduk.adapter = adapter
         rvProduk.layoutManager = layoutManager
     }
 
