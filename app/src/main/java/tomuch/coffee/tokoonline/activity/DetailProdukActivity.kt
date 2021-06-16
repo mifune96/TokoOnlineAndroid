@@ -45,7 +45,7 @@ class DetailProdukActivity : AppCompatActivity() {
             if (data == null){
                 insert()
             } else {
-                data.jumlah = data.jumlah + 1
+                data.jumlah += 1
                 update(data)
             }
 

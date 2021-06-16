@@ -6,20 +6,22 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CalendarView
-import android.widget.CheckBox
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.squareup.picasso.Picasso
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import tomuch.coffee.tokoonline.MainActivity
 import tomuch.coffee.tokoonline.R
 import tomuch.coffee.tokoonline.activity.DetailProdukActivity
 import tomuch.coffee.tokoonline.activity.LoginActivity
 import tomuch.coffee.tokoonline.helper.Helper
 import tomuch.coffee.tokoonline.model.Produk
+import tomuch.coffee.tokoonline.room.MyDatabase
 import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -34,7 +36,7 @@ class AdapterCart(var activity: Activity, var data:ArrayList<Produk>): RecyclerV
 
         val btnTambah = view.findViewById<ImageView>(R.id.btn_tambah)
         val btnKurang = view.findViewById<ImageView>(R.id.btn_kurang)
-        val btnDelet = view.findViewById<ImageView>(R.id.btn_delet)
+        val btnDelet = view.findViewById<ImageView>(R.id.btn_delete)
 
         val checkbox = view.findViewById<CheckBox>(R.id.cb_produk)
         val tvJumlah = view.findViewById<TextView>(R.id.tv_jumlah)
@@ -52,15 +54,18 @@ class AdapterCart(var activity: Activity, var data:ArrayList<Produk>): RecyclerV
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
+
+        val produk = data[position]
+
         // tempat set value
-        holder.tvNama.text = data[position].name
-        holder.tvHarga.text = Helper().changeRupiah(data[position].harga)
+        holder.tvNama.text = produk.name
+        holder.tvHarga.text = Helper().changeRupiah(produk.harga)
 
         var jumlah = data[position].jumlah
         holder.tvJumlah.text = jumlah.toString()
 //        val image = "http://192.168.100.50/tokoonline/public/storage/produk/" +data[position].image
 
-        val image = "https://24bb2db74fc2.ngrok.io/storage/produk/" +data[position].image
+        val image = "https://24bb2db74fc2.ngrok.io/storage/produk/" +produk.image
         Picasso.get()
             .load(image)
             .placeholder(R.drawable.product)
@@ -68,6 +73,49 @@ class AdapterCart(var activity: Activity, var data:ArrayList<Produk>): RecyclerV
             .resize(400,400)
             .into(holder.imgProduk)
 
+        holder.btnTambah.setOnClickListener {
+            jumlah++
+            produk.jumlah = jumlah
+            update(produk)
+            holder.tvJumlah.text = jumlah.toString()
+        }
+
+        holder.btnKurang.setOnClickListener {
+            if (jumlah <= 1) return@setOnClickListener
+            jumlah--
+
+            produk.jumlah = jumlah
+            update(produk)
+            holder.tvJumlah.text = jumlah.toString()
+
+
+        }
+
+        holder.btnDelet.setOnClickListener {
+            delet(produk)
+            notifyItemRemoved(position)
+            notifyDataSetChanged()
+
+        }
+
+    }
+
+    private fun update(data: Produk){
+        val myDb = MyDatabase.getInstance(activity)
+        CompositeDisposable().add(Observable.fromCallable { myDb!!.daoCart().update(data) }
+            .subscribeOn(Schedulers.computation())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+            })
+    }
+
+    private fun delet(data: Produk){
+        val myDb = MyDatabase.getInstance(activity)
+        CompositeDisposable().add(Observable.fromCallable { myDb!!.daoCart().delete(data) }
+            .subscribeOn(Schedulers.computation())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+            })
     }
 
 }
