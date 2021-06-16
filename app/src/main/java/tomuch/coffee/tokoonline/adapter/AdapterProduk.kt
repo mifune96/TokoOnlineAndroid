@@ -19,6 +19,7 @@ import tomuch.coffee.tokoonline.activity.DetailProdukActivity
 import tomuch.coffee.tokoonline.activity.LoginActivity
 import tomuch.coffee.tokoonline.helper.Helper
 import tomuch.coffee.tokoonline.model.Produk
+import tomuch.coffee.tokoonline.util.Config
 import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -49,7 +50,7 @@ class AdapterProduk(var activity: Activity, var data:ArrayList<Produk>): Recycle
 //        holder.imgProduk.setImageResource(data[position].image)
 //        val image = "http://192.168.100.50/tokoonline/public/storage/produk/" +data[position].image
 
-        val image = "https://24bb2db74fc2.ngrok.io/storage/produk/" +data[position].image
+        val image = Config.produkUrl +data[position].image
         Picasso.get()
             .load(image)
             .placeholder(R.drawable.product)

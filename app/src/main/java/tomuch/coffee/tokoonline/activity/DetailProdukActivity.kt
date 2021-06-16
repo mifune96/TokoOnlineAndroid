@@ -22,6 +22,7 @@ import tomuch.coffee.tokoonline.R
 import tomuch.coffee.tokoonline.helper.Helper
 import tomuch.coffee.tokoonline.model.Produk
 import tomuch.coffee.tokoonline.room.MyDatabase
+import tomuch.coffee.tokoonline.util.Config
 
 class DetailProdukActivity : AppCompatActivity() {
 
@@ -111,7 +112,7 @@ class DetailProdukActivity : AppCompatActivity() {
 
 //        val img = "http://192.168.1.4/tokoonline/public/storage/produk/" +produk.image
 //        val img = "https://06794948d1a0.ngrok.io/tokoonline/public/storage/produk/" +produk.image
-        val img = "https://24bb2db74fc2.ngrok.io/storage/produk/" +produk.image
+        val img = Config.produkUrl +produk.image
         Picasso.get()
             .load(img)
             .placeholder(R.drawable.product)

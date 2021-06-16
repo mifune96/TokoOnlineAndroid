@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import tomuch.coffee.tokoonline.R
 import tomuch.coffee.tokoonline.adapter.AdapterCart
 import tomuch.coffee.tokoonline.adapter.AdapterProduk
+import tomuch.coffee.tokoonline.helper.Helper
 import tomuch.coffee.tokoonline.room.MyDatabase
 
 // TODO: Rename parameter arguments, choose names that match
@@ -26,26 +27,44 @@ import tomuch.coffee.tokoonline.room.MyDatabase
  */
 class KeranjangFragment : Fragment() {
 
-
-
-
+    lateinit var myDb : MyDatabase
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_keranjang, container, false)
         init(view)
+        myDb = MyDatabase.getInstance(requireActivity())!!
 
         mainButton()
         return view
     }
 
     private fun displayProduk() {
-        val myDb = MyDatabase.getInstance(requireActivity())
-        val listProduk = myDb!!.daoCart().getAll() as ArrayList
+
+        val listProduk = myDb.daoCart().getAll() as ArrayList
         val layoutManager = LinearLayoutManager(activity)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
 
-        rvProduk.adapter = AdapterCart(requireActivity(),listProduk)
+        rvProduk.adapter = AdapterCart(requireActivity(),listProduk, object  : AdapterCart.Listeners{
+            override fun onUpdate() {
+                hitungTotal()
+            }
+
+            override fun onDelet() {
+
+            }
+        })
         rvProduk.layoutManager = layoutManager
+    }
+
+    fun hitungTotal(){
+        val listProduk = myDb.daoCart().getAll() as ArrayList
+
+        var totalHarga = 0
+        for (produk in listProduk){
+            val harga = Integer.valueOf(produk.harga)
+            totalHarga += (harga * produk.jumlah)
+        }
+        tvTotal.text = Helper().changeRupiah(totalHarga)
     }
 
     private fun mainButton() {
@@ -70,6 +89,7 @@ class KeranjangFragment : Fragment() {
 
     override fun onResume() {
         displayProduk()
+        hitungTotal()
         super.onResume()
     }
 

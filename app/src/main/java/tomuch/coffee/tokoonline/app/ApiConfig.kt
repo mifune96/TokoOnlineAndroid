@@ -6,10 +6,11 @@ import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import tomuch.coffee.tokoonline.util.Config
 import java.util.concurrent.TimeUnit
 
 object ApiConfig {
-    private const val BASE_URL = "https://24bb2db74fc2.ngrok.io/api/"
+    private const val BASE_URL = Config.baseUrl + "api/"
 //    private const val BASE_URL = "http://192.168.1.4/tokoonline/public/api/"
     private val client: Retrofit
         get() {

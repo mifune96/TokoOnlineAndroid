@@ -22,11 +22,12 @@ import tomuch.coffee.tokoonline.activity.LoginActivity
 import tomuch.coffee.tokoonline.helper.Helper
 import tomuch.coffee.tokoonline.model.Produk
 import tomuch.coffee.tokoonline.room.MyDatabase
+import tomuch.coffee.tokoonline.util.Config
 import java.text.NumberFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class AdapterCart(var activity: Activity, var data:ArrayList<Produk>): RecyclerView.Adapter<AdapterCart.Holder>() {
+class AdapterCart(var activity: Activity, var data:ArrayList<Produk>, var listener :Listeners): RecyclerView.Adapter<AdapterCart.Holder>() {
 
     class Holder(view: View):RecyclerView.ViewHolder(view){
         val tvNama = view.findViewById<TextView>(R.id.tv_nama)
@@ -56,6 +57,7 @@ class AdapterCart(var activity: Activity, var data:ArrayList<Produk>): RecyclerV
     override fun onBindViewHolder(holder: Holder, position: Int) {
 
         val produk = data[position]
+        val harga = Integer.valueOf(produk.harga)
 
         // tempat set value
         holder.tvNama.text = produk.name
@@ -65,7 +67,7 @@ class AdapterCart(var activity: Activity, var data:ArrayList<Produk>): RecyclerV
         holder.tvJumlah.text = jumlah.toString()
 //        val image = "http://192.168.100.50/tokoonline/public/storage/produk/" +data[position].image
 
-        val image = "https://24bb2db74fc2.ngrok.io/storage/produk/" +produk.image
+        val image = Config.produkUrl +produk.image
         Picasso.get()
             .load(image)
             .placeholder(R.drawable.product)
@@ -78,6 +80,7 @@ class AdapterCart(var activity: Activity, var data:ArrayList<Produk>): RecyclerV
             produk.jumlah = jumlah
             update(produk)
             holder.tvJumlah.text = jumlah.toString()
+            holder.tvHarga.text = Helper().changeRupiah(harga * jumlah)
         }
 
         holder.btnKurang.setOnClickListener {
@@ -87,17 +90,20 @@ class AdapterCart(var activity: Activity, var data:ArrayList<Produk>): RecyclerV
             produk.jumlah = jumlah
             update(produk)
             holder.tvJumlah.text = jumlah.toString()
+            holder.tvHarga.text = Helper().changeRupiah(harga * jumlah)
 
 
         }
 
         holder.btnDelet.setOnClickListener {
             delet(produk)
-            notifyItemRemoved(position)
-            notifyDataSetChanged()
-
         }
 
+    }
+
+    interface Listeners{
+        fun onUpdate()
+        fun onDelet()
     }
 
     private fun update(data: Produk){
@@ -106,6 +112,7 @@ class AdapterCart(var activity: Activity, var data:ArrayList<Produk>): RecyclerV
             .subscribeOn(Schedulers.computation())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
+                listener.onUpdate()
             })
     }
 
@@ -115,6 +122,7 @@ class AdapterCart(var activity: Activity, var data:ArrayList<Produk>): RecyclerV
             .subscribeOn(Schedulers.computation())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
+                listener.onDelet()
             })
     }
 
