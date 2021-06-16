@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 object ApiConfig {
-    private const val BASE_URL = "https://414260128518.ngrok.io/api/"
+    private const val BASE_URL = "https://24bb2db74fc2.ngrok.io/api/"
 //    private const val BASE_URL = "http://192.168.1.4/tokoonline/public/api/"
     private val client: Retrofit
         get() {

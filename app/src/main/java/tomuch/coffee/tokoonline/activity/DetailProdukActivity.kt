@@ -111,7 +111,7 @@ class DetailProdukActivity : AppCompatActivity() {
 
 //        val img = "http://192.168.1.4/tokoonline/public/storage/produk/" +produk.image
 //        val img = "https://06794948d1a0.ngrok.io/tokoonline/public/storage/produk/" +produk.image
-        val img = "https://414260128518.ngrok.io/storage/produk/" +produk.image
+        val img = "https://24bb2db74fc2.ngrok.io/storage/produk/" +produk.image
         Picasso.get()
             .load(img)
             .placeholder(R.drawable.product)

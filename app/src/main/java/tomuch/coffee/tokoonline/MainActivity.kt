@@ -1,13 +1,18 @@
 package tomuch.coffee.tokoonline
 
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.BoringLayout
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.fragment_home.*
 import tomuch.coffee.tokoonline.activity.LoginActivity
@@ -33,6 +38,8 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var s:SharedPref
 
+    private var dariDetail :Boolean = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -40,6 +47,15 @@ class MainActivity : AppCompatActivity() {
         s = SharedPref(this)
 
         setUpBottomNav()
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMesaage, IntentFilter("event:cart"))
+    }
+
+    val mMesaage : BroadcastReceiver = object :BroadcastReceiver(){
+        override fun onReceive(p0: Context?, p1: Intent?) {
+           dariDetail = true
+        }
+
     }
 
     fun setUpBottomNav (){
@@ -83,5 +99,13 @@ class MainActivity : AppCompatActivity() {
         menuItem.isChecked = true
         fm.beginTransaction().hide(active).show(fragment).commit()
         active = fragment
+    }
+
+    override fun onResume() {
+        if (dariDetail) {
+            dariDetail = false
+            callFragment(1,fragmentKeranjang)
+        }
+        super.onResume()
     }
 }
