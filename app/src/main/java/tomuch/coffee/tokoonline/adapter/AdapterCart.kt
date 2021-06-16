@@ -58,7 +58,6 @@ class AdapterCart(var activity: Activity, var data:ArrayList<Produk>): RecyclerV
 
         var jumlah = data[position].jumlah
         holder.tvJumlah.text = jumlah.toString()
-//        holder.imgProduk.setImageResource(data[position].image)
 //        val image = "http://192.168.100.50/tokoonline/public/storage/produk/" +data[position].image
 
         val image = "https://24bb2db74fc2.ngrok.io/storage/produk/" +data[position].image
@@ -68,16 +67,6 @@ class AdapterCart(var activity: Activity, var data:ArrayList<Produk>): RecyclerV
             .error(R.drawable.product)
             .resize(400,400)
             .into(holder.imgProduk)
-
-        holder.layout.setOnClickListener {
-            val activiti = Intent(Intent(activity, DetailProdukActivity::class.java))
-            //mengirim semua info produk ke string
-            val str = Gson().toJson(data[position], Produk::class.java)
-            activiti.putExtra("extra", str)
-
-            activity.startActivity(activiti)
-        }
-
 
     }
 
