@@ -58,6 +58,14 @@ class AdapterCart(var activity: Activity, var data:ArrayList<Produk>, var listen
 
         var jumlah = data[position].jumlah
         holder.tvJumlah.text = jumlah.toString()
+
+        holder.checkbox.isChecked = produk.selected
+        holder.checkbox.setOnCheckedChangeListener { buttonView, isChecked ->
+
+            produk.selected = isChecked
+            update(produk)
+        }
+
 //        val image = "http://192.168.100.50/tokoonline/public/storage/produk/" +data[position].image
 
         val image = Config.produkUrl +produk.image
