@@ -1,13 +1,13 @@
 package tomuch.coffee.tokoonline.fragment
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import tomuch.coffee.tokoonline.R
@@ -27,8 +27,12 @@ import tomuch.coffee.tokoonline.room.MyDatabase
  */
 class KeranjangFragment : Fragment() {
 
-    lateinit var myDb : MyDatabase
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    lateinit var myDb: MyDatabase
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         // Inflate the layout for this fragment
         val view: View = inflater.inflate(R.layout.fragment_keranjang, container, false)
         init(view)
@@ -37,7 +41,8 @@ class KeranjangFragment : Fragment() {
         mainButton()
         return view
     }
-    lateinit var adapter : AdapterCart
+
+    lateinit var adapter: AdapterCart
     var listProduk = ArrayList<Produk>()
     private fun displayProduk() {
         listProduk = myDb.daoCart().getAll() as ArrayList
@@ -45,7 +50,7 @@ class KeranjangFragment : Fragment() {
         layoutManager.orientation = LinearLayoutManager.VERTICAL
 
 
-        adapter = AdapterCart(requireActivity(),listProduk, object  : AdapterCart.Listeners{
+        adapter = AdapterCart(requireActivity(), listProduk, object : AdapterCart.Listeners {
             override fun onUpdate() {
                 hitungTotal()
             }
@@ -60,12 +65,12 @@ class KeranjangFragment : Fragment() {
         rvProduk.layoutManager = layoutManager
     }
 
-    fun hitungTotal(){
+    fun hitungTotal() {
         val listProduk = myDb.daoCart().getAll() as ArrayList
 
         var totalHarga = 0
         var isSelectedAll = true
-        for (produk in listProduk){
+        for (produk in listProduk) {
             if (produk.selected) {
                 val harga = Integer.valueOf(produk.harga)
                 totalHarga += (harga * produk.jumlah)
@@ -88,7 +93,7 @@ class KeranjangFragment : Fragment() {
         }
 
         cbAll.setOnClickListener {
-            for (i in listProduk.indices){
+            for (i in listProduk.indices) {
                 val produk = listProduk[i]
                 produk.selected = cbAll.isChecked
                 listProduk[i] = produk
@@ -97,11 +102,12 @@ class KeranjangFragment : Fragment() {
             adapter.notifyDataSetChanged()
         }
     }
-    lateinit var btnHapus : ImageView
-    lateinit var rvProduk : RecyclerView
-    lateinit var btnBayar : TextView
-    lateinit var tvTotal : TextView
-    lateinit var cbAll : CheckBox
+
+    lateinit var btnHapus: ImageView
+    lateinit var rvProduk: RecyclerView
+    lateinit var btnBayar: TextView
+    lateinit var tvTotal: TextView
+    lateinit var cbAll: CheckBox
     private fun init(view: View) {
         btnHapus = view.findViewById(R.id.btn_delet)
         rvProduk = view.findViewById(R.id.rv_produk)

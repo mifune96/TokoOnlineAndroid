@@ -11,7 +11,7 @@ public class Produk implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "idTb")
-    public int  idTb;
+    public int idTb;
 
     public int id;
     public String name;

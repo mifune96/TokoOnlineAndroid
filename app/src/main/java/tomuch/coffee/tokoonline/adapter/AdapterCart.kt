@@ -18,11 +18,11 @@ import tomuch.coffee.tokoonline.model.Produk
 import tomuch.coffee.tokoonline.room.MyDatabase
 import tomuch.coffee.tokoonline.util.Config
 import java.util.*
-import kotlin.collections.ArrayList
 
-class AdapterCart(var activity: Activity, var data:ArrayList<Produk>, var listener :Listeners): RecyclerView.Adapter<AdapterCart.Holder>() {
+class AdapterCart(var activity: Activity, var data: ArrayList<Produk>, var listener: Listeners) :
+    RecyclerView.Adapter<AdapterCart.Holder>() {
 
-    class Holder(view: View):RecyclerView.ViewHolder(view){
+    class Holder(view: View) : RecyclerView.ViewHolder(view) {
         val tvNama = view.findViewById<TextView>(R.id.tv_nama)
         val tvHarga = view.findViewById<TextView>(R.id.tv_harga)
         val imgProduk = view.findViewById<ImageView>(R.id.img_produk)
@@ -39,12 +39,13 @@ class AdapterCart(var activity: Activity, var data:ArrayList<Produk>, var listen
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        val view: View = LayoutInflater.from(parent.context).inflate(R.layout.item_cart, parent, false)
+        val view: View =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_cart, parent, false)
         return Holder(view)
     }
 
     override fun getItemCount(): Int {
-        return  data.size
+        return data.size
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
@@ -68,12 +69,12 @@ class AdapterCart(var activity: Activity, var data:ArrayList<Produk>, var listen
 
 //        val image = "http://192.168.100.50/tokoonline/public/storage/produk/" +data[position].image
 
-        val image = Config.produkUrl +produk.image
+        val image = Config.produkUrl + produk.image
         Picasso.get()
             .load(image)
             .placeholder(R.drawable.product)
             .error(R.drawable.product)
-            .resize(400,400)
+            .resize(400, 400)
             .into(holder.imgProduk)
 
         holder.btnTambah.setOnClickListener {
@@ -101,12 +102,12 @@ class AdapterCart(var activity: Activity, var data:ArrayList<Produk>, var listen
 
     }
 
-    interface Listeners{
+    interface Listeners {
         fun onUpdate()
         fun onDelet(position: Int)
     }
 
-    private fun update(data: Produk){
+    private fun update(data: Produk) {
         val myDb = MyDatabase.getInstance(activity)
         CompositeDisposable().add(Observable.fromCallable { myDb!!.daoCart().update(data) }
             .subscribeOn(Schedulers.computation())
@@ -116,7 +117,7 @@ class AdapterCart(var activity: Activity, var data:ArrayList<Produk>, var listen
             })
     }
 
-    private fun delet(data: Produk){
+    private fun delet(data: Produk) {
         val myDb = MyDatabase.getInstance(activity)
         CompositeDisposable().add(Observable.fromCallable { myDb!!.daoCart().delete(data) }
             .subscribeOn(Schedulers.computation())

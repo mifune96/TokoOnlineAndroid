@@ -3,12 +3,11 @@ package tomuch.coffee.tokoonline.fragment
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import tomuch.coffee.tokoonline.R
 import tomuch.coffee.tokoonline.activity.LoginActivity
 import tomuch.coffee.tokoonline.helper.SharedPref
@@ -24,11 +23,11 @@ import tomuch.coffee.tokoonline.helper.SharedPref
  */
 class AkunFragment : Fragment() {
 
-    lateinit var s:SharedPref
-    lateinit var btnLogout:TextView
-    lateinit var tvNama:TextView
-    lateinit var tvEmail:TextView
-    lateinit var tvNotlpn:TextView
+    lateinit var s: SharedPref
+    lateinit var btnLogout: TextView
+    lateinit var tvNama: TextView
+    lateinit var tvEmail: TextView
+    lateinit var tvNotlpn: TextView
 
     @SuppressLint("UseRequireInsteadOfGet")
     override fun onCreateView(
@@ -52,7 +51,7 @@ class AkunFragment : Fragment() {
 
     fun setData() {
 
-        if (s.getUser() == null){
+        if (s.getUser() == null) {
             val intent = Intent(activity, LoginActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)

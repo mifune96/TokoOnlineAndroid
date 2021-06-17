@@ -8,7 +8,7 @@ import android.widget.ImageView
 import androidx.annotation.NonNull
 import androidx.viewpager.widget.PagerAdapter
 import tomuch.coffee.tokoonline.R
-import java.util.ArrayList
+import java.util.*
 
 class AdapterSlider(var data: ArrayList<Int>, var context: Activity?) : PagerAdapter() {
     lateinit var layoutInflater: LayoutInflater

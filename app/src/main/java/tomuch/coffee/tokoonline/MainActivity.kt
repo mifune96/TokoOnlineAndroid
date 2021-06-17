@@ -4,18 +4,15 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.BoringLayout
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import kotlinx.android.synthetic.main.fragment_home.*
-import tomuch.coffee.tokoonline.activity.LoginActivity
 import tomuch.coffee.tokoonline.activity.MasukActivity
 import tomuch.coffee.tokoonline.fragment.AkunFragment
 import tomuch.coffee.tokoonline.fragment.HomeFragment
@@ -24,9 +21,9 @@ import tomuch.coffee.tokoonline.helper.SharedPref
 
 class MainActivity : AppCompatActivity() {
 
-    private val fragmentHome : Fragment = HomeFragment()
-    private val fragmentAkun : Fragment = AkunFragment()
-    private val fragmentKeranjang : Fragment = KeranjangFragment()
+    private val fragmentHome: Fragment = HomeFragment()
+    private val fragmentAkun: Fragment = AkunFragment()
+    private val fragmentKeranjang: Fragment = KeranjangFragment()
     private val fm: FragmentManager = supportFragmentManager
     private var active: Fragment = fragmentHome
 
@@ -36,9 +33,9 @@ class MainActivity : AppCompatActivity() {
 
     private val statusLogin = false
 
-    private lateinit var s:SharedPref
+    private lateinit var s: SharedPref
 
-    private var dariDetail :Boolean = false
+    private var dariDetail: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,20 +45,22 @@ class MainActivity : AppCompatActivity() {
 
         setUpBottomNav()
 
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMesaage, IntentFilter("event:cart"))
+        LocalBroadcastManager.getInstance(this)
+            .registerReceiver(mMesaage, IntentFilter("event:cart"))
     }
 
-    val mMesaage : BroadcastReceiver = object :BroadcastReceiver(){
+    val mMesaage: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(p0: Context?, p1: Intent?) {
-           dariDetail = true
+            dariDetail = true
         }
 
     }
 
-    fun setUpBottomNav (){
+    fun setUpBottomNav() {
         fm.beginTransaction().add(R.id.container, fragmentHome).show(fragmentHome).commit()
         fm.beginTransaction().add(R.id.container, fragmentAkun).hide(fragmentAkun).commit()
-        fm.beginTransaction().add(R.id.container, fragmentKeranjang).hide(fragmentKeranjang).commit()
+        fm.beginTransaction().add(R.id.container, fragmentKeranjang).hide(fragmentKeranjang)
+            .commit()
 
         bottomNavigationView = findViewById(R.id.nav_view)
         menu = bottomNavigationView.menu
@@ -69,20 +68,20 @@ class MainActivity : AppCompatActivity() {
         menuItem.isChecked = true
 
         bottomNavigationView.setOnNavigationItemSelectedListener { item ->
-            when(item.itemId){
+            when (item.itemId) {
                 R.id.navigation_home -> {
-                    callFragment(0,fragmentHome)
+                    callFragment(0, fragmentHome)
                 }
 
                 R.id.navigation_keranjang -> {
-                    callFragment(1,fragmentKeranjang)
+                    callFragment(1, fragmentKeranjang)
                 }
 
                 R.id.navigation_akun -> {
-                    if (s.getStatusLofgin()){
-                        callFragment(2,fragmentAkun)
-                    } else{
-                        startActivity(Intent(this, MasukActivity::class.java ))
+                    if (s.getStatusLofgin()) {
+                        callFragment(2, fragmentAkun)
+                    } else {
+                        startActivity(Intent(this, MasukActivity::class.java))
                     }
 
                 }
@@ -93,7 +92,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun callFragment(int: Int,fragment: Fragment){
+    fun callFragment(int: Int, fragment: Fragment) {
         Log.d("Respons", "Akun ")
         menuItem = menu.getItem(int)
         menuItem.isChecked = true
@@ -104,7 +103,7 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         if (dariDetail) {
             dariDetail = false
-            callFragment(1,fragmentKeranjang)
+            callFragment(1, fragmentKeranjang)
         }
         super.onResume()
     }

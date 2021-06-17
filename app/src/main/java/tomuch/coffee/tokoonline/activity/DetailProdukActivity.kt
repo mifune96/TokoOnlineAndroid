@@ -1,11 +1,11 @@
 package tomuch.coffee.tokoonline.activity
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.gson.Gson
 import com.squareup.picasso.Picasso
@@ -14,8 +14,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_detail_produk.*
-import kotlinx.android.synthetic.main.item_cart.view.*
-import kotlinx.android.synthetic.main.toolbar.*
 import kotlinx.android.synthetic.main.toolbar.toolbar
 import kotlinx.android.synthetic.main.toolbar_custom.*
 import tomuch.coffee.tokoonline.R
@@ -40,10 +38,10 @@ class DetailProdukActivity : AppCompatActivity() {
 
     }
 
-    private fun mainButton(){
+    private fun mainButton() {
         btn_keranjangdetailproduk.setOnClickListener {
             val data = myDb.daoCart().getProduk(produk.id)
-            if (data == null){
+            if (data == null) {
                 insert()
             } else {
                 data.jumlah += 1
@@ -55,7 +53,7 @@ class DetailProdukActivity : AppCompatActivity() {
         btn_favoritdetailproduk.setOnClickListener {
 
             val listNote = myDb.daoCart().getAll() // get All data
-            for(note :Produk in listNote){
+            for (note: Produk in listNote) {
                 println("-----------------------")
                 println(note.name)
                 println(note.harga)
@@ -68,34 +66,34 @@ class DetailProdukActivity : AppCompatActivity() {
         }
     }
 
-    private fun insert(){
+    private fun insert() {
         CompositeDisposable().add(Observable.fromCallable { myDb.daoCart().insert(produk) }
             .subscribeOn(Schedulers.computation())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
                 checkCart()
                 Log.d("respons", "data inserted")
-                Toast.makeText(this, "Data Berhasil Ditambahkan ke Cart",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Data Berhasil Ditambahkan ke Cart", Toast.LENGTH_SHORT).show()
             })
     }
 
-    private fun update(data: Produk){
+    private fun update(data: Produk) {
         CompositeDisposable().add(Observable.fromCallable { myDb.daoCart().update(data) }
             .subscribeOn(Schedulers.computation())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
                 checkCart()
                 Log.d("respons", "data inserted")
-                Toast.makeText(this, "Data Berhasil Ditambahkan ke Cart",Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Data Berhasil Ditambahkan ke Cart", Toast.LENGTH_SHORT).show()
             })
     }
 
-    private fun checkCart(){
+    private fun checkCart() {
         val dataCart = myDb.daoCart().getAll()
-        if (dataCart.isNotEmpty()){
+        if (dataCart.isNotEmpty()) {
             div_angka.visibility = View.VISIBLE
             tv_angka.text = dataCart.size.toString()
-        }else{
+        } else {
             div_angka.visibility = View.GONE
 
         }
@@ -112,12 +110,12 @@ class DetailProdukActivity : AppCompatActivity() {
 
 //        val img = "http://192.168.1.4/tokoonline/public/storage/produk/" +produk.image
 //        val img = "https://06794948d1a0.ngrok.io/tokoonline/public/storage/produk/" +produk.image
-        val img = Config.produkUrl +produk.image
+        val img = Config.produkUrl + produk.image
         Picasso.get()
             .load(img)
             .placeholder(R.drawable.product)
             .error(R.drawable.product)
-            .resize(400,400)
+            .resize(400, 400)
             .into(iv_image)
 
         //settoolbar

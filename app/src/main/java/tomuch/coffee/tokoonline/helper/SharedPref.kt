@@ -1,30 +1,29 @@
 package tomuch.coffee.tokoonline.helper
 
-import android.R
 import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 import com.google.gson.Gson
 import tomuch.coffee.tokoonline.model.User
 
-class SharedPref(activity: Activity){
+class SharedPref(activity: Activity) {
 
     val login = "login"
 
     val user = "user"
 
     val myPref = "MAIN_PREF"
-    val sp:SharedPreferences
+    val sp: SharedPreferences
 
     init {
         sp = activity.getSharedPreferences(myPref, Context.MODE_PRIVATE)
     }
 
-    fun setStatusLogin(status:Boolean){
-        sp.edit().putBoolean(login,status).apply()
+    fun setStatusLogin(status: Boolean) {
+        sp.edit().putBoolean(login, status).apply()
     }
 
-    fun getStatusLofgin():Boolean{
+    fun getStatusLofgin(): Boolean {
         return sp.getBoolean(login, false)
     }
 
@@ -39,10 +38,10 @@ class SharedPref(activity: Activity){
     }
 
     fun setSting(key: String, value: String) {
-        sp.edit().putString(key,value).apply()
+        sp.edit().putString(key, value).apply()
     }
 
     fun getString(key: String): String {
-        return sp.getString(key,"")!!
+        return sp.getString(key, "")!!
     }
 }

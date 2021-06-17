@@ -2,31 +2,25 @@ package tomuch.coffee.tokoonline.adapter
 
 import android.app.Activity
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CalendarView
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.squareup.picasso.Picasso
-import tomuch.coffee.tokoonline.MainActivity
 import tomuch.coffee.tokoonline.R
 import tomuch.coffee.tokoonline.activity.DetailProdukActivity
-import tomuch.coffee.tokoonline.activity.LoginActivity
 import tomuch.coffee.tokoonline.helper.Helper
 import tomuch.coffee.tokoonline.model.Produk
 import tomuch.coffee.tokoonline.util.Config
-import java.text.NumberFormat
-import java.util.*
-import kotlin.collections.ArrayList
 
-class AdapterProduk(var activity: Activity, var data:ArrayList<Produk>): RecyclerView.Adapter<AdapterProduk.Holder>() {
+class AdapterProduk(var activity: Activity, var data: ArrayList<Produk>) :
+    RecyclerView.Adapter<AdapterProduk.Holder>() {
 
-    class Holder(view: View):RecyclerView.ViewHolder(view){
+    class Holder(view: View) : RecyclerView.ViewHolder(view) {
         val tvNama = view.findViewById<TextView>(R.id.tv_nama)
         val tvHarga = view.findViewById<TextView>(R.id.tv_harga)
         val imgProduk = view.findViewById<ImageView>(R.id.img_produk)
@@ -35,12 +29,13 @@ class AdapterProduk(var activity: Activity, var data:ArrayList<Produk>): Recycle
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        val view: View = LayoutInflater.from(parent.context).inflate(R.layout.item_produk, parent, false)
+        val view: View =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_produk, parent, false)
         return Holder(view)
     }
 
     override fun getItemCount(): Int {
-        return  data.size
+        return data.size
     }
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
@@ -50,12 +45,12 @@ class AdapterProduk(var activity: Activity, var data:ArrayList<Produk>): Recycle
 //        holder.imgProduk.setImageResource(data[position].image)
 //        val image = "http://192.168.100.50/tokoonline/public/storage/produk/" +data[position].image
 
-        val image = Config.produkUrl +data[position].image
+        val image = Config.produkUrl + data[position].image
         Picasso.get()
             .load(image)
             .placeholder(R.drawable.product)
             .error(R.drawable.product)
-            .resize(400,400)
+            .resize(400, 400)
             .into(holder.imgProduk)
 
         holder.layout.setOnClickListener {

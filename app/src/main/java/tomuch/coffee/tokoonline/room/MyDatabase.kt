@@ -6,16 +6,16 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import tomuch.coffee.tokoonline.model.Produk
 
-@Database(entities = [Produk::class] /* List Model */ , version = 1)
+@Database(entities = [Produk::class] /* List Model */, version = 1)
 abstract class MyDatabase : RoomDatabase() {
     abstract fun daoCart(): DaoCart //Dao Cart
 
-    companion object{
-        private var  INSTANCE: MyDatabase? = null
+    companion object {
+        private var INSTANCE: MyDatabase? = null
 
         fun getInstance(context: Context): MyDatabase? {
-            if (INSTANCE == null){
-                synchronized(MyDatabase::class){
+            if (INSTANCE == null) {
+                synchronized(MyDatabase::class) {
                     INSTANCE = Room.databaseBuilder(
                         context.applicationContext,
                         MyDatabase::class.java, "MyDatabasename2" //nama database
@@ -24,7 +24,8 @@ abstract class MyDatabase : RoomDatabase() {
             }
             return INSTANCE
         }
-        fun destroyInstance(){
+
+        fun destroyInstance() {
             INSTANCE = null
         }
     }

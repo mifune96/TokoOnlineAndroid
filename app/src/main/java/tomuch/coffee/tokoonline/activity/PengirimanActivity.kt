@@ -4,9 +4,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import tomuch.coffee.tokoonline.R
 
-class BaruActivity : AppCompatActivity() {
+class PengirimanActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_baru)
+        setContentView(R.layout.activity_pengiriman)
     }
 }
