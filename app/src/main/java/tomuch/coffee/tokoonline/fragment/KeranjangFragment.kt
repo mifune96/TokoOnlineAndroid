@@ -1,5 +1,6 @@
 package tomuch.coffee.tokoonline.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import tomuch.coffee.tokoonline.R
+import tomuch.coffee.tokoonline.activity.PengirimanActivity
 import tomuch.coffee.tokoonline.adapter.AdapterCart
 import tomuch.coffee.tokoonline.helper.Helper
 import tomuch.coffee.tokoonline.model.Produk
@@ -85,6 +87,7 @@ class KeranjangFragment : Fragment() {
 
     private fun mainButton() {
         btnBayar.setOnClickListener {
+            startActivity(Intent(requireActivity(), PengirimanActivity::class.java))
 
         }
 
