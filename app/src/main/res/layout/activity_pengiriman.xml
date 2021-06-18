@@ -116,8 +116,8 @@
                 android:background="@drawable/bg_btn_tambah"
                 android:paddingHorizontal="20dp"
                 android:text="Tambah Alamat"
-                android:textSize="11sp"
-                android:textAllCaps="false" />
+                android:textAllCaps="false"
+                android:textSize="11sp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -381,8 +381,8 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Rp. 9.000"
                             android:gravity="right"
+                            android:text="Rp. 0"
                             android:textColor="@color/colorPrimary" />
 
                     </LinearLayout>
@@ -401,14 +401,15 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Total Belanja"
+                            android:text="Biaya Pengiriman"
                             android:textColor="@color/colorPrimary" />
 
                         <TextView
+                            android:id="@+id/tv_ongkir"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Rp. 9.000"
                             android:gravity="right"
+                            android:text="Rp. 0"
                             android:textColor="@color/colorPrimary" />
 
                     </LinearLayout>
@@ -427,14 +428,15 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Total Belanja"
+                            android:text="Total"
                             android:textColor="@color/colorPrimary" />
 
                         <TextView
+                            android:id="@+id/tv_total"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Rp. 9.000"
                             android:gravity="right"
+                            android:text="Rp. 0"
                             android:textColor="@color/colorPrimary" />
 
                     </LinearLayout>
@@ -451,8 +453,8 @@
                 android:layout_marginVertical="15dp"
                 android:background="@drawable/bg_btn_beli"
                 android:text="Bayar"
-                android:textColor="@color/white"
-                android:textAllCaps="false"/>
+                android:textAllCaps="false"
+                android:textColor="@color/white" />
 
         </LinearLayout>
 
