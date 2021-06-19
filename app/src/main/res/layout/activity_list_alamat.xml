@@ -20,13 +20,37 @@
         android:textSize="14sp"
         android:textStyle="bold" />
 
-    <TextView
-        android:visibility="gone"
-        android:layout_gravity="center_horizontal"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:id="@+id/div_kosong"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="15dp"
-        android:text="Belum Ada Daftar Alamat"/>
+        android:layout_marginTop="20dp"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="15dp"
+            android:text="Belum ada alamat"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
+            android:visibility="visible" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="20dp"
+            android:gravity="center"
+            android:text="Tambahkan alamat anda sekarang untuk belanja di\nToko kami"
+            android:textColor="@color/colorPrimary"
+            android:visibility="visible" />
+
+    </LinearLayout>
+
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_alamat"
