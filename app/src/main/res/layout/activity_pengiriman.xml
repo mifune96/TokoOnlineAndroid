@@ -437,7 +437,7 @@
                             android:layout_height="wrap_content"
                             android:gravity="right"
                             android:text="Rp. 0"
-                            android:textColor="@color/colorPrimary" />
+                            android:textColor="@color/orange" />
 
                     </LinearLayout>
 
