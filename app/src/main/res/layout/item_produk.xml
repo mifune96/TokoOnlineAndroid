@@ -31,6 +31,18 @@
             />
 
         <TextView
+            android:id="@+id/tv_hargaAsli"
+            android:textColor="#8F8F8F"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
+            android:textSize="12sp"
+            android:layout_marginHorizontal="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Rp.0"
+            />
+
+        <TextView
             android:textColor="@color/orange"
            android:layout_marginTop="5dp"
             android:layout_marginBottom="10dp"

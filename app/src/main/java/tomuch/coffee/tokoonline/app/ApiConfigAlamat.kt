@@ -10,7 +10,7 @@ import tomuch.coffee.tokoonline.util.Config
 import java.util.concurrent.TimeUnit
 
 object ApiConfigAlamat {
-    private const val BASE_URL = "https://dev.farizdotid.com/api/daerahindonesia/"
+    private const val BASE_URL = "https://api.rajaongkir.com/starter/"
 
     //    private const val BASE_URL = "http://192.168.1.4/tokoonline/public/api/"
     private val client: Retrofit

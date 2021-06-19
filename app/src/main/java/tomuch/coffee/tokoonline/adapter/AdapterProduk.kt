@@ -2,6 +2,7 @@ package tomuch.coffee.tokoonline.adapter
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Paint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +24,7 @@ class AdapterProduk(var activity: Activity, var data: ArrayList<Produk>) :
     class Holder(view: View) : RecyclerView.ViewHolder(view) {
         val tvNama = view.findViewById<TextView>(R.id.tv_nama)
         val tvHarga = view.findViewById<TextView>(R.id.tv_harga)
+        val tvHargaAsli = view.findViewById<TextView>(R.id.tv_hargaAsli)
         val imgProduk = view.findViewById<ImageView>(R.id.img_produk)
         val layout = view.findViewById<CardView>(R.id.layout)
 
@@ -40,8 +42,19 @@ class AdapterProduk(var activity: Activity, var data: ArrayList<Produk>) :
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
         // tempat set value
+        val a = data[position]
+
+        var hargaAsli = Integer.valueOf(a.harga)
+        var harga = Integer.valueOf(a.harga)
+
+        if (a.discount != 0){
+            harga -= a.discount
+        }
+
+        holder.tvHargaAsli.text = Helper().changeRupiah(hargaAsli)
+        holder.tvHargaAsli.paintFlags = holder.tvHargaAsli.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
         holder.tvNama.text = data[position].name
-        holder.tvHarga.text = Helper().changeRupiah(data[position].harga)
+        holder.tvHarga.text = Helper().changeRupiah(harga)
 //        holder.imgProduk.setImageResource(data[position].image)
 //        val image = "http://192.168.100.50/tokoonline/public/storage/produk/" +data[position].image
 

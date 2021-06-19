@@ -20,23 +20,23 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="5dp">
+            android:padding="15dp">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <ImageView
                     android:id="@+id/img1"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginLeft="25dp"
-                    android:src="@drawable/ic_baseline_home_work_24" />
+                    app:srcCompat="@drawable/ic_baseline_home_work_24" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/img1"
+                    android:layout_below="@+id/img1"
                     android:layout_marginLeft="10dp"
                     android:text="Pengiriman" />
 
@@ -45,8 +45,8 @@
                     android:layout_height="2dp"
                     android:layout_marginHorizontal="5dp"
                     android:layout_marginTop="20dp"
-                    android:layout_toLeftOf="@id/img2"
-                    android:layout_toRightOf="@id/img1"
+                    android:layout_toLeftOf="@+id/img2"
+                    android:layout_toRightOf="@+id/img1"
                     android:background="#CFCFCF" />
 
                 <ImageView
@@ -54,12 +54,12 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_centerHorizontal="true"
-                    android:src="@drawable/ic_baseline_payment_24" />
+                    app:srcCompat="@drawable/ic_baseline_payment_24" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/img2"
+                    android:layout_below="@+id/img2"
                     android:layout_centerHorizontal="true"
                     android:text="Metode Pembayaran" />
 
@@ -68,8 +68,8 @@
                     android:layout_height="2dp"
                     android:layout_marginHorizontal="5dp"
                     android:layout_marginTop="20dp"
-                    android:layout_toLeftOf="@id/img3"
-                    android:layout_toRightOf="@id/img2"
+                    android:layout_toLeftOf="@+id/img3"
+                    android:layout_toRightOf="@+id/img2"
                     android:background="#CFCFCF" />
 
                 <ImageView
@@ -78,15 +78,16 @@
                     android:layout_height="40dp"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="25dp"
-                    android:src="@drawable/ic_baseline_check_circle_24" />
+                    app:srcCompat="@drawable/ic_baseline_check_circle_24" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@id/img3"
+                    android:layout_below="@+id/img3"
                     android:layout_alignParentRight="true"
                     android:layout_marginRight="22dp"
                     android:text="Selesai" />
+
 
             </RelativeLayout>
 
@@ -96,7 +97,7 @@
                 android:layout_marginTop="20dp"
                 android:text="Alamat Pengiriman"
                 android:textColor="@color/colorPrimary"
-                android:textSize="14sp"
+                android:textSize="14dp"
                 android:textStyle="bold" />
 
             <TextView
@@ -107,26 +108,23 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="10dp"
                 android:text="* Pilih alamat pengiriman"
-                android:textSize="14sp"
-                android:visibility="visible"/>
+                android:visibility="visible" />
 
             <androidx.cardview.widget.CardView
-                android:visibility="gone"
                 android:id="@+id/div_alamat"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="2dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="15dp"
-                xmlns:app="http://schemas.android.com/apk/res-auto">
+                android:visibility="gone">
 
                 <LinearLayout
-                    android:orientation="horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    >
-
+                    android:layout_toLeftOf="@+id/btn_edit"
+                    android:orientation="horizontal"
+                    android:padding="10dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -166,7 +164,6 @@
 
             </androidx.cardview.widget.CardView>
 
-
             <Button
                 android:id="@+id/btn_tambahAlamat"
                 android:layout_width="wrap_content"
@@ -177,209 +174,66 @@
                 android:paddingHorizontal="20dp"
                 android:text="Tambah Alamat"
                 android:textAllCaps="false"
-                android:textSize="11sp" />
+                android:textSize="11dp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Metode Pengiriman"
-                android:textColor="@color/colorPrimary"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <androidx.cardview.widget.CardView
+            <LinearLayout
+                android:id="@+id/div_metodePengiriman"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:cardElevation="0dp">
+                android:orientation="vertical">
 
-                <RadioGroup
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:text="Pilih Metode Pengiriman"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14dp"
+                    android:textStyle="bold" />
+
+                <Spinner
+                    android:id="@+id/spn_kurir"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_marginVertical="10dp"
+                    android:textSize="14dp" />
 
-                    <LinearLayout
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Metode Pengiriman"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="14dp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_kosong"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginBottom="10dp"
+                    android:text="* Pilih metode pengiriman"
+                    android:visibility="gone" />
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/div_pengiriman"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:visibility="visible"
+                    app:cardElevation="0dp">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_metode"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="10dp">
+                        android:layout_height="wrap_content" />
 
-                        <RadioButton
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:checked="true" />
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="5dp"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="JNE Reguler"
-                                android:textColor="@color/colorPrimary" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="3 Hari kerja"
-                                android:textColor="@color/colorPrimary"
-                                android:textSize="10sp" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="5dp"
-                            android:gravity="right"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Rp. 9.000"
-                                android:textColor="@color/colorPrimary" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="1 Kg x Rp. 9000"
-                                android:textColor="@color/colorPrimary"
-                                android:textSize="10sp" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="#EAEAEA" />
-
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="10dp">
-
-                        <RadioButton
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="5dp"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/j_t_reg"
-                                android:textColor="@color/colorPrimary" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="2 Hari kerja"
-                                android:textColor="@color/colorPrimary"
-                                android:textSize="10sp" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="5dp"
-                            android:gravity="right"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Rp. 15.000"
-                                android:textColor="@color/colorPrimary" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="1 Kg x Rp. 15.000"
-                                android:textColor="@color/colorPrimary"
-                                android:textSize="10sp" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="#EAEAEA" />
+                </androidx.cardview.widget.CardView>
 
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal"
-                        android:padding="10dp">
-
-                        <RadioButton
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content" />
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="5dp"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="SICEPAT REG"
-                                android:textColor="@color/colorPrimary" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="1 Hari kerja"
-                                android:textColor="@color/colorPrimary"
-                                android:textSize="10sp" />
-
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="5dp"
-                            android:gravity="right"
-                            android:orientation="vertical">
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="Rp. 25.000"
-                                android:textColor="@color/colorPrimary" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="1 Kg x Rp. 25.000"
-                                android:textColor="@color/colorPrimary"
-                                android:textSize="10sp" />
-
-                        </LinearLayout>
-
-                    </LinearLayout>
-
-
-                </RadioGroup>
-
-            </androidx.cardview.widget.CardView>
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -387,7 +241,7 @@
                 android:layout_marginTop="20dp"
                 android:text="Catatan Pengiriman"
                 android:textColor="@color/colorPrimary"
-                android:textSize="14sp"
+                android:textSize="14dp"
                 android:textStyle="bold" />
 
             <RelativeLayout
@@ -401,7 +255,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:background="@null"
-                    android:hint="Catatan Untuk Penjual (Opsional)"
+                    android:hint="Catatan untuk penjual(Opsional)"
                     android:textSize="14dp" />
 
             </RelativeLayout>
@@ -412,7 +266,7 @@
                 android:layout_marginTop="20dp"
                 android:text="Rekap Belanja"
                 android:textColor="@color/colorPrimary"
-                android:textSize="14sp"
+                android:textSize="14dp"
                 android:textStyle="bold" />
 
             <androidx.cardview.widget.CardView
@@ -439,10 +293,11 @@
                             android:textColor="@color/colorPrimary" />
 
                         <TextView
+                            android:id="@+id/tv_totalBelanja"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="right"
-                            android:text="Rp. 0"
+                            android:text="Rp0"
                             android:textColor="@color/colorPrimary" />
 
                     </LinearLayout>
@@ -469,7 +324,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="right"
-                            android:text="Rp. 0"
+                            android:text="Rp0"
                             android:textColor="@color/colorPrimary" />
 
                     </LinearLayout>
@@ -496,22 +351,23 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="right"
-                            android:text="Rp. 0"
+                            android:text="Rp0"
                             android:textColor="@color/orange" />
 
                     </LinearLayout>
-
 
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
 
             <Button
+                android:id="@+id/btn_bayar"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginVertical="15dp"
                 android:background="@drawable/bg_btn_beli"
+                android:paddingHorizontal="15dp"
                 android:text="Bayar"
                 android:textAllCaps="false"
                 android:textColor="@color/white" />
@@ -519,6 +375,4 @@
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
-
-
 </LinearLayout>
