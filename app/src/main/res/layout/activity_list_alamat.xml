@@ -43,6 +43,6 @@
         android:paddingHorizontal="30dp"
         android:text="Tambah Alamat"
         android:textAllCaps="false"
-        android:textSize="11sp" />
+        android:textSize="11dp" />
 
 </LinearLayout>
