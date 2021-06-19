@@ -173,6 +173,7 @@ class TambahAlamatActivity : AppCompatActivity() {
     }
 
     private fun getKota(id: Int) {
+        pb_tambahalamat.visibility = View.VISIBLE
         ApiConfigAlamat.instanceRetrofit.getKota(id).enqueue(object : Callback<ResponModel> {
             override fun onResponse(call: Call<ResponModel>, response: Response<ResponModel>) {
 
@@ -229,6 +230,7 @@ class TambahAlamatActivity : AppCompatActivity() {
     }
 
     private fun getKecamatan(id: Int) {
+        pb_tambahalamat.visibility = View.VISIBLE
         ApiConfigAlamat.instanceRetrofit.getKecamatan(id).enqueue(object : Callback<ResponModel> {
             override fun onResponse(call: Call<ResponModel>, response: Response<ResponModel>) {
 
@@ -262,9 +264,6 @@ class TambahAlamatActivity : AppCompatActivity() {
                             ) {
                                 if (position != 0) {
                                     kecamatan = listkecmatan[position - 1]
-                                    val idKecamatan =
-                                        listkecmatan[position - 1].id //kenapa -1 larna array 0 udah di add tulisan pilih provinsi
-                                    getKecamatan(idKecamatan)
                                 }
                             }
 
@@ -290,6 +289,9 @@ class TambahAlamatActivity : AppCompatActivity() {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe {
                 toast("Berhasil masukin data alamat cuy")
+                for (alamat in myDb.daoAlamat().getAll()){
+                    Log.d("Alamat", "nama : " +alamat.name + " - "+alamat.alamat + " - " + alamat.kota)
+                }
             })
     }
 
