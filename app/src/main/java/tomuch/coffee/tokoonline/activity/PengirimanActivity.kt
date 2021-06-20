@@ -6,10 +6,9 @@ import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import kotlinx.android.synthetic.main.activity_login.*
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_pengiriman.*
 import kotlinx.android.synthetic.main.toolbar.*
 import retrofit2.Call
@@ -17,16 +16,15 @@ import retrofit2.Callback
 import retrofit2.Response
 import tomuch.coffee.tokoonline.R
 import tomuch.coffee.tokoonline.adapter.AdapterKurir
-import tomuch.coffee.tokoonline.app.ApiConfig
 import tomuch.coffee.tokoonline.app.ApiConfigAlamat
 import tomuch.coffee.tokoonline.helper.Helper
 import tomuch.coffee.tokoonline.helper.SharedPref
 import tomuch.coffee.tokoonline.model.Checkout
-import tomuch.coffee.tokoonline.model.ResponModel
 import tomuch.coffee.tokoonline.model.rajaongkir.Costs
 import tomuch.coffee.tokoonline.model.rajaongkir.ResponOngkir
 import tomuch.coffee.tokoonline.room.MyDatabase
 import tomuch.coffee.tokoonline.util.ApiKey
+import kotlin.math.log
 
 class PengirimanActivity : AppCompatActivity() {
 
@@ -138,39 +136,19 @@ class PengirimanActivity : AppCompatActivity() {
         checkout.total_harga = "" + totalHarga
         checkout.name = a.name
         checkout.phone = a.phone
+        checkout.jasa_pengiriaman = jasakirim
+        checkout.ongkir = ongkir
+        checkout.kurir = kurir
+        checkout.total_transfer = ""+ (totalHarga+ Integer.valueOf(ongkir))
         checkout.produks = produks
 
-        ApiConfig.instanceRetrofit.checkout(checkout)
-            .enqueue(object : Callback<ResponModel> {
-                override fun onResponse(call: Call<ResponModel>, response: Response<ResponModel>) {
-                    val respon = response.body()!!
-                    if (respon.succes == 1) {
+        val json = Gson().toJson(checkout, Checkout::class.java)
+        Log.d("Respon:" , "json: "+ json)
+        val intent =Intent(this, PembayaranActivity::class.java)
+        intent.putExtra("extra", json)
+        startActivity(intent)
 
-                        Toast.makeText(
-                            this@PengirimanActivity,
-                            "Berhasil kirim data ke server",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    } else {
-                        //Respon Gagal
-                        Toast.makeText(
-                            this@PengirimanActivity,
-                            "Error: " + respon.message,
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
-                }
 
-                override fun onFailure(call: Call<ResponModel>, t: Throwable) {
-                    Toast.makeText(
-                        this@PengirimanActivity,
-                        "Error: " + t.message,
-                        Toast.LENGTH_SHORT
-                    )
-                        .show()
-                }
-
-            })
     }
 
     private fun getOngkir(kurir: String) {
@@ -209,7 +187,10 @@ class PengirimanActivity : AppCompatActivity() {
             })
     }
 
-    private fun displayOngkir(kurir: String, arrayList: ArrayList<Costs>) {
+    var ongkir = ""
+    var kurir = ""
+    var jasakirim = ""
+    private fun displayOngkir(_kurir: String, arrayList: ArrayList<Costs>) {
 
         var arrayOngkir = ArrayList<Costs>()
         for (i in arrayList.indices) {
@@ -227,7 +208,7 @@ class PengirimanActivity : AppCompatActivity() {
         val layoutManager = LinearLayoutManager(this)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         var adapter: AdapterKurir? = null
-        adapter = AdapterKurir(arrayOngkir, kurir, object : AdapterKurir.Listeners {
+        adapter = AdapterKurir(arrayOngkir, _kurir, object : AdapterKurir.Listeners {
             override fun onClicked(data: Costs, index: Int) {
                 val newArrayOngkir = ArrayList<Costs>()
                 for (ongkir in arrayOngkir) {
@@ -238,6 +219,10 @@ class PengirimanActivity : AppCompatActivity() {
                 arrayOngkir = newArrayOngkir
                 adapter!!.notifyDataSetChanged()
                 setTotal(data.cost[0].value)
+
+                ongkir = data.cost[0].value
+                kurir = _kurir
+                jasakirim = data.service
             }
 
         })
