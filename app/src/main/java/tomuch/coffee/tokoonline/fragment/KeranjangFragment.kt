@@ -67,10 +67,11 @@ class KeranjangFragment : Fragment() {
         rvProduk.layoutManager = layoutManager
     }
 
+    var totalHarga = 0
     fun hitungTotal() {
         val listProduk = myDb.daoCart().getAll() as ArrayList
 
-        var totalHarga = 0
+        totalHarga = 0
         var isSelectedAll = true
         for (produk in listProduk) {
             if (produk.selected) {
@@ -87,8 +88,9 @@ class KeranjangFragment : Fragment() {
 
     private fun mainButton() {
         btnBayar.setOnClickListener {
-            startActivity(Intent(requireActivity(), PengirimanActivity::class.java))
-
+            val intent = (Intent(requireActivity(), PengirimanActivity::class.java))
+            intent.putExtra("extra", ""+ totalHarga)
+            startActivity(intent)
         }
 
         btnHapus.setOnClickListener {

@@ -39,18 +39,18 @@ class AdapterKurir(var data: ArrayList<Costs>, var kurir: String, var listener: 
 
         val a = data[position]
 
-//        holder.rd.isChecked = a.isActive
+        holder.rd.isChecked = a.isActive
         holder.tvNama.text = kurir + " " + a.service
         val cost = a.cost[0]
         holder.tvLamapengiriman.text = cost.etd + " hari kerja"
         holder.tvHarga.text = Helper().changeRupiah(cost.value)
         holder.tvBerat.text = "1 Kg x " + Helper().changeRupiah(cost.value)
 //        holder.tvAlamat.text = a.alamat +", " + a.kota + ", " + a.kecamatan + ", " + a.kodepos + ", (" + a.type + ")"
-//
-//        holder.rd.setOnClickListener {
-//            a.isActive = true
-//            listener.onClicked(a, holder.adapterPosition)
-//        }
+
+        holder.rd.setOnClickListener {
+            a.isActive = true
+            listener.onClicked(a, holder.adapterPosition)
+        }
 //        holder.layout.setOnClickListener {
 //            a.isSelected = true
 //            listener.onClicked(a)
@@ -59,7 +59,7 @@ class AdapterKurir(var data: ArrayList<Costs>, var kurir: String, var listener: 
     }
 
     interface Listeners {
-        fun onClicked(data: Alamat)
+        fun onClicked(data: Costs, index: Int)
     }
 
 }

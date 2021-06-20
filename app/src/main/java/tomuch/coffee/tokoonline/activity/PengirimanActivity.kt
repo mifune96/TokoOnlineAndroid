@@ -9,8 +9,6 @@ import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.activity_pengiriman.*
-import kotlinx.android.synthetic.main.activity_pengiriman.div_kosong
-import kotlinx.android.synthetic.main.activity_tambah_alamat.*
 import kotlinx.android.synthetic.main.toolbar.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -19,7 +17,6 @@ import tomuch.coffee.tokoonline.R
 import tomuch.coffee.tokoonline.adapter.AdapterKurir
 import tomuch.coffee.tokoonline.app.ApiConfigAlamat
 import tomuch.coffee.tokoonline.helper.Helper
-import tomuch.coffee.tokoonline.model.Alamat
 import tomuch.coffee.tokoonline.model.rajaongkir.Costs
 import tomuch.coffee.tokoonline.model.rajaongkir.ResponOngkir
 import tomuch.coffee.tokoonline.room.MyDatabase
@@ -28,6 +25,7 @@ import tomuch.coffee.tokoonline.util.ApiKey
 class PengirimanActivity : AppCompatActivity() {
 
     lateinit var myDb: MyDatabase
+    var totalHarga = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,6 +34,8 @@ class PengirimanActivity : AppCompatActivity() {
         Helper().setToolbar(this, toolbar, "Pengiriman")
         myDb = MyDatabase.getInstance(this)!!
 
+        totalHarga = Integer.valueOf(intent.getStringExtra("extra")!!)
+        tv_totalBelanja.text = Helper().changeRupiah(totalHarga)
         mainButton()
         setSpinner()
     }
@@ -63,7 +63,7 @@ class PengirimanActivity : AppCompatActivity() {
                     id: Long
                 ) {
                     if (position != 0) {
-                       getOngkir(spn_kurir.selectedItem.toString())
+                        getOngkir(spn_kurir.selectedItem.toString())
                     }
                 }
 
@@ -107,13 +107,22 @@ class PengirimanActivity : AppCompatActivity() {
         val destination = alamat!!.id_Kota.toString()
         val berat = 1000
 
-        ApiConfigAlamat.instanceRetrofit.onkir(ApiKey.key, origin, destination, berat, kurir.toLowerCase())
+        ApiConfigAlamat.instanceRetrofit.onkir(
+            ApiKey.key,
+            origin,
+            destination,
+            berat,
+            kurir.toLowerCase()
+        )
             .enqueue(object : Callback<ResponOngkir> {
-                override fun onResponse(call: Call<ResponOngkir>, response: Response<ResponOngkir>) {
+                override fun onResponse(
+                    call: Call<ResponOngkir>,
+                    response: Response<ResponOngkir>
+                ) {
                     if (response.isSuccessful) {
                         Log.d("Sukses", "berhasil memuat data")
                         val result = response.body()!!.rajaongkir.results
-                        if (result.isNotEmpty()){
+                        if (result.isNotEmpty()) {
                             displayOngkir(result[0].code.toUpperCase(), result[0].costs)
                         }
 
@@ -130,17 +139,43 @@ class PengirimanActivity : AppCompatActivity() {
 
     private fun displayOngkir(kurir: String, arrayList: ArrayList<Costs>) {
 
+        var arrayOngkir = ArrayList<Costs>()
+        for (i in arrayList.indices) {
+            val ongkir = arrayList[i]
+            if (i == 0) {
+                ongkir.isActive = true
+            }
+            arrayOngkir.add(ongkir)
+        }
+        setTotal(arrayOngkir[0].cost[0].value)
+
         if (arrayList.isEmpty()) div_kosong.visibility = View.VISIBLE
         else div_kosong.visibility = View.GONE
 
         val layoutManager = LinearLayoutManager(this)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
-        rv_metode.adapter = AdapterKurir(arrayList, kurir, object : AdapterKurir.Listeners {
-            override fun onClicked(data: Alamat) {
+        var adapter: AdapterKurir? = null
+        adapter = AdapterKurir(arrayOngkir, kurir, object : AdapterKurir.Listeners {
+            override fun onClicked(data: Costs, index: Int) {
+                val newArrayOngkir = ArrayList<Costs>()
+                for (ongkir in arrayOngkir) {
+                    ongkir.isActive = data.description == ongkir.description
+                    newArrayOngkir.add(ongkir)
+                }
 
+                arrayOngkir = newArrayOngkir
+                adapter!!.notifyDataSetChanged()
+                setTotal(data.cost[0].value)
             }
+
         })
+        rv_metode.adapter = adapter
         rv_metode.layoutManager = layoutManager
+    }
+
+    fun setTotal(ongkir: String) {
+        tv_ongkir.text = Helper().changeRupiah(ongkir)
+        tv_total.text = Helper().changeRupiah(Integer.valueOf(ongkir) + totalHarga)
     }
 
     override fun onSupportNavigateUp(): Boolean {
