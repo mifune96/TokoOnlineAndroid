@@ -8,9 +8,14 @@ import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import tomuch.coffee.tokoonline.R
 import tomuch.coffee.tokoonline.activity.PengirimanActivity
 import tomuch.coffee.tokoonline.adapter.AdapterCart
@@ -88,13 +93,33 @@ class KeranjangFragment : Fragment() {
 
     private fun mainButton() {
         btnBayar.setOnClickListener {
-            val intent = (Intent(requireActivity(), PengirimanActivity::class.java))
-            intent.putExtra("extra", ""+ totalHarga)
-            startActivity(intent)
+
+            var isThereProduk = false //ini keyika produk gk keselek di keranjang
+            for (p in listProduk) {
+                if (p.selected) isThereProduk = true
+            }
+
+            if (isThereProduk) {
+                val intent = (Intent(requireActivity(), PengirimanActivity::class.java))
+                intent.putExtra("extra", "" + totalHarga)
+                startActivity(intent)
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "Tidak Ada Produk yang terpilih: ",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
         }
 
         btnHapus.setOnClickListener {
+            val listDelet = ArrayList<Produk>()
+            for (p in listProduk) {
+                if (p.selected) listDelet.add(p)
+            }
 
+            delet(listDelet)
         }
 
         cbAll.setOnClickListener {
@@ -106,6 +131,18 @@ class KeranjangFragment : Fragment() {
             }
             adapter.notifyDataSetChanged()
         }
+    }
+
+    private fun delet(data: ArrayList<Produk>) {
+        CompositeDisposable().add(Observable.fromCallable { myDb.daoCart().delete(data) }
+            .subscribeOn(Schedulers.computation())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe {
+                listProduk.clear()
+                listProduk.addAll(myDb.daoCart().getAll() as ArrayList)
+                adapter.notifyDataSetChanged()
+
+            })
     }
 
     lateinit var btnHapus: ImageView

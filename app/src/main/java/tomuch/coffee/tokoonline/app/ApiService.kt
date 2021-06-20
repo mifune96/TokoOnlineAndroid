@@ -1,8 +1,8 @@
 package tomuch.coffee.tokoonline.app
 
-import android.webkit.WebStorage
 import retrofit2.Call
 import retrofit2.http.*
+import tomuch.coffee.tokoonline.model.Checkout
 import tomuch.coffee.tokoonline.model.ResponModel
 import tomuch.coffee.tokoonline.model.rajaongkir.ResponOngkir
 
@@ -22,6 +22,11 @@ interface ApiService {
     fun login(
         @Field("email") email: String,
         @Field("password") password: String
+    ): Call<ResponModel>
+
+    @POST("chekout")
+    fun checkout(
+        @Body data: Checkout
     ): Call<ResponModel>
 
     @GET("produk")
