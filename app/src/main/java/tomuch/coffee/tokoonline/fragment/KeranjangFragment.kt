@@ -17,9 +17,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import tomuch.coffee.tokoonline.R
+import tomuch.coffee.tokoonline.activity.MasukActivity
 import tomuch.coffee.tokoonline.activity.PengirimanActivity
 import tomuch.coffee.tokoonline.adapter.AdapterCart
 import tomuch.coffee.tokoonline.helper.Helper
+import tomuch.coffee.tokoonline.helper.SharedPref
 import tomuch.coffee.tokoonline.model.Produk
 import tomuch.coffee.tokoonline.room.MyDatabase
 
@@ -35,6 +37,7 @@ import tomuch.coffee.tokoonline.room.MyDatabase
 class KeranjangFragment : Fragment() {
 
     lateinit var myDb: MyDatabase
+    lateinit var share: SharedPref
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -44,6 +47,8 @@ class KeranjangFragment : Fragment() {
         val view: View = inflater.inflate(R.layout.fragment_keranjang, container, false)
         init(view)
         myDb = MyDatabase.getInstance(requireActivity())!!
+
+        share = SharedPref(requireActivity())
 
         mainButton()
         return view
@@ -94,21 +99,30 @@ class KeranjangFragment : Fragment() {
     private fun mainButton() {
         btnBayar.setOnClickListener {
 
-            var isThereProduk = false //ini keyika produk gk keselek di keranjang
-            for (p in listProduk) {
-                if (p.selected) isThereProduk = true
-            }
+            if (share.getStatusLofgin()) {
+                var isThereProduk = false //ini keyika produk gk keselek di keranjang
+                for (p in listProduk) {
+                    if (p.selected) isThereProduk = true
+                }
 
-            if (isThereProduk) {
-                val intent = (Intent(requireActivity(), PengirimanActivity::class.java))
-                intent.putExtra("extra", "" + totalHarga)
-                startActivity(intent)
+                if (isThereProduk) {
+                    val intent = (Intent(requireActivity(), PengirimanActivity::class.java))
+                    intent.putExtra("extra", "" + totalHarga)
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(
+                        requireContext(),
+                        "Tidak Ada Produk yang terpilih: ",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             } else {
-                Toast.makeText(
-                    requireContext(),
-                    "Tidak Ada Produk yang terpilih: ",
-                    Toast.LENGTH_SHORT
-                ).show()
+                requireActivity().startActivity(
+                    Intent(
+                        requireActivity(),
+                        MasukActivity::class.java
+                    )
+                )
             }
 
         }

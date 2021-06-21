@@ -3,13 +3,16 @@ package tomuch.coffee.tokoonline.activity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_pembayaran.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import tomuch.coffee.tokoonline.R
+import tomuch.coffee.tokoonline.adapter.AdapterBank
 import tomuch.coffee.tokoonline.app.ApiConfig
+import tomuch.coffee.tokoonline.model.Bank
 import tomuch.coffee.tokoonline.model.Checkout
 import tomuch.coffee.tokoonline.model.ResponModel
 
@@ -18,20 +21,25 @@ class PembayaranActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pembayaran)
 
-        btn_bca.setOnClickListener {
-            bayar("bca")
+        displayBank()
+    }
 
-        }
+    fun displayBank(){
+        val arrBank = ArrayList<Bank>()
+        arrBank.add(Bank("BCA", "09112881", "Ali Imran", R.drawable.logo_bca))
+        arrBank.add(Bank("BRI", "881112881", "Ali Imran",R.drawable.logo_bri))
+        arrBank.add(Bank("MANDIRI", "11409112881", "Ali Imran",R.drawable.logo_madiri))
 
-        btn_bri.setOnClickListener {
-            bayar("bri")
+        val layoutManager = LinearLayoutManager(this)
+        layoutManager.orientation = LinearLayoutManager.VERTICAL
 
-        }
+        rv_bank.layoutManager = layoutManager
+        rv_bank.adapter = AdapterBank(arrBank, object : AdapterBank.Listeners{
+            override fun onClicked(data: Bank, index: Int) {
+                bayar(data.nama)
+            }
 
-        btn_mandiri.setOnClickListener {
-            bayar("mandiri")
-
-        }
+        })
     }
 
     fun bayar(bank: String){

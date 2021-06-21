@@ -201,7 +201,9 @@ class PengirimanActivity : AppCompatActivity() {
             arrayOngkir.add(ongkir)
         }
         setTotal(arrayOngkir[0].cost[0].value)
-
+        ongkir = arrayOngkir[0].cost[0].value
+        kurir = _kurir
+        jasakirim = arrayOngkir[0].service
         if (arrayList.isEmpty()) div_kosong.visibility = View.VISIBLE
         else div_kosong.visibility = View.GONE
 
