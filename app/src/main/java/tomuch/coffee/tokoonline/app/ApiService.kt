@@ -25,7 +25,7 @@ interface ApiService {
     ): Call<ResponModel>
 
     @POST("chekout")
-    fun checkout(
+    fun chekout(
         @Body data: Checkout
     ): Call<ResponModel>
 
