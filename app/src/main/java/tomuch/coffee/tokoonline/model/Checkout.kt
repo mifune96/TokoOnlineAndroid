@@ -7,8 +7,9 @@ class Checkout {
     lateinit var name: String
     lateinit var phone: String
     lateinit var kurir: String
-    lateinit var jasa_pengiriman: String
     lateinit var ongkir: String
+    lateinit var detail_lokasi: String
+    lateinit var jasa_pengiriman: String
     lateinit var total_transfer: String
     lateinit var bank: String
     var produks = ArrayList<Item>()
