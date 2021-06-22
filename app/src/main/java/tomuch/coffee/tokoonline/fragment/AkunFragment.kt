@@ -6,10 +6,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
+import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import tomuch.coffee.tokoonline.R
 import tomuch.coffee.tokoonline.activity.LoginActivity
+import tomuch.coffee.tokoonline.activity.RiwayatActivity
 import tomuch.coffee.tokoonline.helper.SharedPref
 
 // TODO: Rename parameter arguments, choose names that match
@@ -29,6 +32,8 @@ class AkunFragment : Fragment() {
     lateinit var tvEmail: TextView
     lateinit var tvNotlpn: TextView
 
+    lateinit var btnRiwayat: RelativeLayout
+
     @SuppressLint("UseRequireInsteadOfGet")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,13 +45,21 @@ class AkunFragment : Fragment() {
 
         s = SharedPref(activity!!)
 
+        mainButton()
+        setData()
+        return view
+    }
+
+    fun mainButton(){
 
         btnLogout.setOnClickListener {
             s.setStatusLogin(false)
         }
 
-        setData()
-        return view
+        btnRiwayat.setOnClickListener {
+            startActivity(Intent(requireActivity(), RiwayatActivity::class.java))
+        }
+
     }
 
     fun setData() {
@@ -71,6 +84,7 @@ class AkunFragment : Fragment() {
         tvNama = view.findViewById(R.id.tv_namaprofil)
         tvNotlpn = view.findViewById(R.id.tv_nomortlpprofil)
         tvEmail = view.findViewById(R.id.tv_emailprofil)
+        btnRiwayat = view.findViewById(R.id.btn_riwayatbelanja)
     }
 
 

@@ -58,4 +58,9 @@ interface ApiService {
         @Field("courier") courier: String
     ): Call<ResponOngkir>
 
+    @GET("chekout/user/{id}")
+    fun getHistory(
+        @Path("id") id: String
+    ): Call<ResponModel>
+
 }

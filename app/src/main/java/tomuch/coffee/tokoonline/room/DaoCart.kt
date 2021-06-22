@@ -24,6 +24,9 @@ interface DaoCart {
     @Query("SELECT * FROM cart WHERE id = :id LIMIT 1")
     fun getProduk(id: Int): Produk
 
+    @Query("DELETE FROM cart WHERE id = :id ")
+    fun deleteById(id: String): Int
+
     @Query("DELETE FROM cart")
     fun deleteAll(): Int
 }
