@@ -1,6 +1,7 @@
 package tomuch.coffee.tokoonline.adapter
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -34,7 +35,9 @@ class AdapterRiwayat(var data: ArrayList<Transaksi>, var listener : Listeners):
 
     }
 
+    lateinit var context: Context
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
+        context = parent.context
         val view: View =
             LayoutInflater.from(parent.context).inflate(R.layout.item_riwayat, parent, false)
         return Holder(view)
@@ -55,6 +58,12 @@ class AdapterRiwayat(var data: ArrayList<Transaksi>, var listener : Listeners):
         holder.tvJumlah.text = a.total_item + " Items"
         holder.tvStatus.text = a.status
         holder.tvTangal.text = a.created_at
+
+        var color = context.getColor(R.color.menungu)
+        if (a.status == "SELESAI") color = context.getColor(R.color.selesai)
+        else if (a.status == "BATAL") color = context.getColor(R.color.batal)
+
+        holder.tvStatus.setTextColor(color)
 
         holder.layout.setOnClickListener {
             listener.onClicked(a)

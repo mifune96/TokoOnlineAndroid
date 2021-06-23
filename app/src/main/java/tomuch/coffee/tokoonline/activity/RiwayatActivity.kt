@@ -29,7 +29,7 @@ class RiwayatActivity : AppCompatActivity() {
 
     fun getHistory() {
         val id = SharedPref(this).getUser()!!.id
-        ApiConfig.instanceRetrofit.getHistory(id.toString()).enqueue(object :
+        ApiConfig.instanceRetrofit.getHistory(id).enqueue(object :
             Callback<ResponModel> {
             override fun onResponse(call: Call<ResponModel>, response: Response<ResponModel>) {
                 val res = response.body()!!

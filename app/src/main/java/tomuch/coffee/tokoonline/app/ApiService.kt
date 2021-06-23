@@ -60,7 +60,12 @@ interface ApiService {
 
     @GET("chekout/user/{id}")
     fun getHistory(
-        @Path("id") id: String
+        @Path("id") id: Int
+    ): Call<ResponModel>
+
+    @POST("chekout/batal/{id}")
+    fun batalChekout(
+        @Path("id") id: Int
     ): Call<ResponModel>
 
 }
