@@ -73,7 +73,10 @@ class DetailTransaksiActivity : AppCompatActivity() {
 
     private fun setData(t: Transaksi) {
         tv_status.text = t.status
-        tv_tgl.text = t.created_at
+
+        val formatBaru ="dd MMMM yyyy, kk:mm:ss"
+        tv_tgl.text = Helper().convertDateTime(t.created_at, formatBaru)
+
         tv_penerima.text = t.name + " - " + t.phone
         tv_alamat.text = t.detail_lokasi
         tv_kodeUnik.text = Helper().changeRupiah(t.kode_unik)

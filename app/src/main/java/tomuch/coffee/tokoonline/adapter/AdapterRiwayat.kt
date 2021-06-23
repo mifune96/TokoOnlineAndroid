@@ -3,6 +3,7 @@ package tomuch.coffee.tokoonline.adapter
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +21,7 @@ import tomuch.coffee.tokoonline.model.Alamat
 import tomuch.coffee.tokoonline.model.Produk
 import tomuch.coffee.tokoonline.model.Transaksi
 import tomuch.coffee.tokoonline.util.Config
+import java.text.SimpleDateFormat
 
 class AdapterRiwayat(var data: ArrayList<Transaksi>, var listener : Listeners):
     RecyclerView.Adapter<AdapterRiwayat.Holder>() {
@@ -57,7 +59,14 @@ class AdapterRiwayat(var data: ArrayList<Transaksi>, var listener : Listeners):
         holder.tvHarga.text = Helper().changeRupiah(a.total_transfer)
         holder.tvJumlah.text = a.total_item + " Items"
         holder.tvStatus.text = a.status
-        holder.tvTangal.text = a.created_at
+
+        // 2021-04-30 18:30:20 //24
+        // jam 1 k || 01 kk
+        // 09:20:20 am 12/pm/am
+        //proses comfer datetime dari server ke text view
+
+        val formatBaru ="d MMM yyyy"
+        holder.tvTangal.text = Helper().convertDateTime(a.created_at, formatBaru)
 
         var color = context.getColor(R.color.menungu)
         if (a.status == "SELESAI") color = context.getColor(R.color.selesai)
