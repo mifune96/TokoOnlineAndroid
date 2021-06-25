@@ -2,9 +2,12 @@ package tomuch.coffee.tokoonline.activity
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.android.synthetic.main.activity_register.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -18,13 +21,13 @@ import tomuch.coffee.tokoonline.model.ResponModel
 class RegisterActivity : AppCompatActivity() {
 
     lateinit var s: SharedPref
-
+    lateinit var fcm:String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
         s = SharedPref(this)
-
+        getFcm()
         btn_register.setOnClickListener {
             register()
         }
@@ -40,6 +43,21 @@ class RegisterActivity : AppCompatActivity() {
         edt_email.setText("ali@gmail.com")
         edt_nomortlp.setText("08127771")
         edt_password.setText("12345678")
+    }
+
+    fun getFcm(){
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w("Respon", "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+            fcm = token.toString()
+
+            Log.d("respon fcm", token.toString())
+        })
     }
 
     fun register() {
@@ -70,7 +88,8 @@ class RegisterActivity : AppCompatActivity() {
             edt_nama.text.toString(),
             edt_email.text.toString(),
             edt_nomortlp.text.toString(),
-            edt_password.text.toString()
+            edt_password.text.toString(),
+            fcm
         ).enqueue(object : Callback<ResponModel> {
             override fun onResponse(call: Call<ResponModel>, response: Response<ResponModel>) {
                 pb_register.visibility = View.GONE
