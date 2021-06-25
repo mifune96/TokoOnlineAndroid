@@ -8,11 +8,14 @@ import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.messaging.FirebaseMessaging
 import tomuch.coffee.tokoonline.activity.MasukActivity
 import tomuch.coffee.tokoonline.fragment.AkunFragment
 import tomuch.coffee.tokoonline.fragment.HomeFragment
@@ -47,6 +50,19 @@ class MainActivity : AppCompatActivity() {
 
         LocalBroadcastManager.getInstance(this)
             .registerReceiver(mMesaage, IntentFilter("event:cart"))
+
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w("Respon", "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+
+            Log.d("respon fcm", token.toString())
+            Toast.makeText(baseContext, token, Toast.LENGTH_SHORT).show()
+        })
     }
 
     val mMesaage: BroadcastReceiver = object : BroadcastReceiver() {

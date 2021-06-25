@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "729293939827",
+    "project_id": "tokoonline-21605",
+    "storage_bucket": "tokoonline-21605.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:729293939827:android:6cbc4568a57126eec2f606",
+        "android_client_info": {
+          "package_name": "tomuch.coffee.tokoonline"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "729293939827-s51sjlmnm4kbd4f762m7bfua2u8veumb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "tomuch.coffee.tokoonline",
+            "certificate_hash": "0ff54254238df810096df98ee71d40dfd585ae62"
+          }
+        },
+        {
+          "client_id": "729293939827-k55uqsf2obqqi1k1lcnhss8hgr3e3v9i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDTvHnAehr5rzElbdqdBOALSycQsiHTqos"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "729293939827-k55uqsf2obqqi1k1lcnhss8hgr3e3v9i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
